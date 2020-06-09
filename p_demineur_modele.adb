@@ -63,6 +63,7 @@ end DevoileCase;
       G(L, C).Etat := marquee;
     else
       G(L, C).Etat := couverte;
+      end if;
   end MarqueCase;
   
   function VictoireJoueur (G : in TV_Grille ) return Boolean is
