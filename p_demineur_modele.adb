@@ -1,7 +1,7 @@
 with p_esiut; use p_esiut;
 with text_io; use text_io;
 
-with Ada.numeics.Discrete_Random;
+with Ada.Numerics.Discrete_Random;
 
 package body p_demineur_modele is
 
