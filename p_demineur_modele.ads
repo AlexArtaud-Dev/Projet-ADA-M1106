@@ -10,6 +10,10 @@ package p_demineur_modele is
 	-- grille de démineur
 	type TV_Grille is array (positive range <>, positive range <>) of TR_Case;
 
+	-- Array loop 
+	Type TV_Around is array(1..2) of integer ;
+
+
 	procedure InitialiseGrille (
 		G : out		TV_Grille;
 		NbMines : in natural );

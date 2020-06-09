@@ -7,19 +7,20 @@ package body p_demineur_modele is
 
 procedure InitialiseGrille (G : out TV_Grille ; NbMines : in natural ) is
   --{NbMines < G'length(1)*G'length(2)} => {NbMines ont été placées au hasard dans G ; toutes les cases sont couvertes}
-	package hasard is new Ada.Numerics.Discrete_Random(Positive); use hasard;
+     
+    package random is new Ada.Numerics.Discrete_Random(Positive); use random;
 	gen : Generator;
-	pos1, pos2 : Positive;
+	x, y : Positive;
 begin
     Reset(gen); 
-	for i in G'range(1) loop
-		for j in G'range(2) loop
-		G(i, j).Etat := couverte;
+	for ligne in G'range(1) loop -- range(1) = première dim
+		for colonne in G'range(2) loop -- range(2) = deuxieme dim
+		G(ligne, colonne).Etat := couverte; -- 
 			for k in 1..NbMines loop
                 --Reset(gen);
-				pos1 := random(gen);
-				pos2 := random(gen);
-				G(pos1, pos2).Occupee := true;
+				x := random(gen);
+				y := random(gen);
+				G(x, y).Occupee := true; -- mise en place des bombes aux coordonnées
 			end loop;
 		end loop;
 	end loop;
@@ -27,18 +28,21 @@ end InitialiseGrille;
   
 function NombreMinesAutour (G : in TV_Grille ; L : in positive ; C : in positive ) return natural is
   --{} => {résultat = le nombre de mines présentes dans les cases adjacentes à la case (L,C) de la grille G}
-    i : natural := 0;
+    n : natural;
+    around : TV_Round := (-1,1);
   begin
-    for j in -1..1 loop
-      for k in -1..1 loop
-        if not (j = 0 or k = 0) and (L + j in G'range (1) and C + k in G'range (2)) then
-          if G (L + j, C + k).occupee then
-            i := i + 1;
+ 
+  n := 0;
+    for ligne in around loop -- Loop le check si il y a quelque chose sur la ligne
+      for colonne in around loop -- Loop le check si il y a quelque chose sur la colonne
+        if (L + ligne in G'range (1) and C + colonne in G'range (2)) then
+          if G (L + ligne, C + colonne).occupee then
+            n := n + 1;
           end if;
         end if;
       end loop;
     end loop;
-    return i;
+    return n;
 end NombreMinesAutour;
 
 procedure DevoileCase (G : in out TV_Grille ; L : in positive ; C : in positive ) is
