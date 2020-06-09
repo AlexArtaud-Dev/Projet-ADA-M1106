@@ -12,7 +12,7 @@ begin
     loop
         ecrire("Nombre de mines : "); lire(nb_mine);
         if not ( nb_mine < nb_ligne * nb_colone and nb_mine <= 0) then
-            ecrire_ligne("Mauvais nombre de mines");
+            ecrire_ligne("Mauvais nombre de mines.");
         end if;
         exit when nb_mine < nb_ligne * nb_colone;
     end loop;
