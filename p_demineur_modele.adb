@@ -49,10 +49,10 @@ procedure DevoileCase (G : in out TV_Grille ; L : in positive ; C : in positive 
 begin
   G (L, C).Etat := decouverte;
   if NombreMinesAutour (G, L, C) = 0 then
-    for j in around'range loop
-      for k in around'range loop
-         if (L + j in G'range (1) and C + k in G'range (2)) then
-          DevoileCase (G, L + j, C + k);
+    for ligne in around'range loop
+      for colonne in around'range loop
+         if (L + ligne in G'range (1) and C + colonne in G'range (2)) then
+          DevoileCase (G, L + ligne, C + colonne);
         end if;
       end loop;
     end loop;
