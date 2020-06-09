@@ -8,26 +8,21 @@ package body p_demineur_modele is
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 
-	procedure InitialiseGrille (G : out TV_Grille ; NbMines : in natural ) is
-	  --{NbMines < G'length(1)*G'length(2)} => {NbMines ont été placées au hasard dans G ; toutes les cases sont couvertes}
-	 
-		package randomizer is new Ada.Numerics.Discrete_Random(Positive); use randomizer;
-		gen : Generator;
-		x, y : Positive;
+	procedure DevoileCase (G : in out TV_Grille ; L : in positive ; C : in positive ) is
+		--{} => {la case en position (L,C) dans la grille G est dévoilée et éventuellement ses voisines}
+		around : TV_Around := (-1,1);
 	begin
-		Reset(gen); 
-		for ligne in G'range(1) loop -- range(1) = première dim
-			for colonne in G'range(2) loop -- range(2) = deuxieme dim
-			G(ligne, colonne).Etat := couverte; -- 
-				for k in 1..NbMines loop
-					--Reset(gen);
-					x := random(gen);
-					y := random(gen);
-					G(x, y).Occupee := true; -- mise en place des bombes aux coordonnées
+		G (L, C).Etat := decouverte;
+		if NombreMinesAutour (G, L, C) = 0 then
+			for ligne in around'range loop
+				for colonne in around'range loop
+					if (L + ligne in G'range (1) and C + colonne in G'range (2)) then
+						DevoileCase (G, L + ligne, C + colonne);
+					end if;
 				end loop;
 			end loop;
-		end loop;
-	end InitialiseGrille;
+		end if;
+	end DevoileCase;
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -54,26 +49,6 @@ package body p_demineur_modele is
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 
-	procedure DevoileCase (G : in out TV_Grille ; L : in positive ; C : in positive ) is
-		--{} => {la case en position (L,C) dans la grille G est dévoilée et éventuellement ses voisines}
-		around : TV_Around := (-1,1);
-	begin
-		G (L, C).Etat := decouverte;
-		if NombreMinesAutour (G, L, C) = 0 then
-			for ligne in around'range loop
-				for colonne in around'range loop
-					if (L + ligne in G'range (1) and C + colonne in G'range (2)) then
-						DevoileCase (G, L + ligne, C + colonne);
-					end if;
-				end loop;
-			end loop;
-		end if;
-	end DevoileCase;
-
-
----------------------------------------------------------------------------------------------------------------------------------------------
-
-
 	procedure MarqueCase (G : in out TV_Grille; L : in positive ; C : in positive ) is
 		--{} => {la case en position (L,C) dans la grille G est marquée si elle était couverte / couverte si elle était marquée}
 	begin
@@ -94,7 +69,7 @@ package body p_demineur_modele is
 	victoire : boolean := true;
 	begin
 		for ligne in G'first(1)..G'last(1) loop
-			for colonne in G'first(1)..G'last(2) loop
+			for colonne in G'first(2)..G'last(2) loop
 			if G(ligne, colonne).Occupee = false then
 				--exit when G(lignej, colonne).Etat = couverte;
 				if G(ligne, colonne).Etat = couverte then
@@ -105,6 +80,31 @@ package body p_demineur_modele is
 		end loop;
 	return victoire;
 	end VictoireJoueur;
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+	procedure InitialiseGrille (G : out TV_Grille ; NbMines : in natural ) is
+	  --{NbMines < G'length(1)*G'length(2)} => {NbMines ont été placées au hasard dans G ; toutes les cases sont couvertes}
+	 
+		package randomizer is new Ada.Numerics.Discrete_Random(Positive); use randomizer;
+		gen : Generator;
+		x, y : Positive;
+	begin
+		Reset(gen); 
+		for ligne in G'range(1) loop -- range(1) = première dim
+			for colonne in G'range(2) loop -- range(2) = deuxieme dim
+			G(ligne, colonne).Etat := couverte; -- 
+				for k in 1..NbMines loop
+					--Reset(gen);
+					x := random(gen);
+					y := random(gen);
+					G(x, y).Occupee := true; -- mise en place des bombes aux coordonnées
+				end loop;
+			end loop;
+		end loop;
+	end InitialiseGrille;
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
