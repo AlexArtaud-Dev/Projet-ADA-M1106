@@ -8,7 +8,7 @@ package body p_demineur_modele is
 procedure InitialiseGrille (G : out TV_Grille ; NbMines : in natural ) is
   --{NbMines < G'length(1)*G'length(2)} => {NbMines ont été placées au hasard dans G ; toutes les cases sont couvertes}
      
-    package random is new Ada.Numerics.Discrete_Random(Positive); use random;
+    package randomizer is new Ada.Numerics.Discrete_Random(Positive); use randomizer;
 	gen : Generator;
 	x, y : Positive;
 begin
@@ -28,15 +28,13 @@ end InitialiseGrille;
   
 function NombreMinesAutour (G : in TV_Grille ; L : in positive ; C : in positive ) return natural is
   --{} => {résultat = le nombre de mines présentes dans les cases adjacentes à la case (L,C) de la grille G}
-    n : natural;
-    around : TV_Round := (-1,1);
+    n : natural := 0;
+    around : TV_Around := (-1,1);
   begin
- 
-  n := 0;
-    for ligne in around loop -- Loop le check si il y a quelque chose sur la ligne
-      for colonne in around loop -- Loop le check si il y a quelque chose sur la colonne
-        if (L + ligne in G'range (1) and C + colonne in G'range (2)) then
-          if G (L + ligne, C + colonne).occupee then
+    for ligne in around'range loop -- Loop le check si il y a quelque chose sur la ligne
+      for colonne in around'range loop -- Loop le check si il y a quelque chose sur la colonne
+        if (ligne + L in G'range (1) and colonne + C in G'range (2)) then
+          if G (ligne + L, colonne + C).occupee then
             n := n + 1;
           end if;
         end if;
@@ -47,12 +45,13 @@ end NombreMinesAutour;
 
 procedure DevoileCase (G : in out TV_Grille ; L : in positive ; C : in positive ) is
   --{} => {la case en position (L,C) dans la grille G est dévoilée et éventuellement ses voisines}
+    around : TV_Around := (-1,1);
 begin
   G (L, C).Etat := decouverte;
   if NombreMinesAutour (G, L, C) = 0 then
-    for j in -1..1 loop
-      for k in -1..1 loop
-         if not (j = 0 or k = 0) and (L + j in G'range (1) and C + k in G'range (2)) then
+    for j in around'range loop
+      for k in around'range loop
+         if (L + j in G'range (1) and C + k in G'range (2)) then
           DevoileCase (G, L + j, C + k);
         end if;
       end loop;
