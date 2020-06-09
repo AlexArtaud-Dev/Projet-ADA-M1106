@@ -110,15 +110,19 @@ package body p_demineur_modele is
 
 end p_demineur_modele;
 
-	ChangColonne := string(1..7);
-	ChangLigne := string(1..5);
+--	ChangColonne := string(1..7);
+--	ChangLigne := string(1..5);
+--	colonne, ligne : positive;
+	
 
---while nombreColonne = 1 and nombreLigne = 1 loop
+-- while nombreColonne = 1 and nombreLigne = 1 loop
 
 --	ecrire("Vous ne pouvez pas avoir les colonnes et lignes =1. Que voulez vous changer ? (colonne/ligne)")
 
--- 		if 
-
+-- 		if ChangColonne = colonne then
+--			ecrire("Entrez le nombre de colonne"); lire (colonne);
+--		elsif
+--			ecrire("");
 
  
 
