@@ -6,13 +6,24 @@ procedure demineur_texte is
     nb_ligne, nb_colone, nb_mine : positive;
     --SaisieLigne, SaisieColone : positive;
     Perdu : boolean := false;
+    
 begin
-    ecrire("Nombre de lignes : "); lire(nb_ligne);
+    ecrire("Nombre de lignes : "); 
+    lire(nb_ligne);
+  
+  --loop
+    --    lire(nb_ligne);
+    --    exit when nb_ligne > 0;
+    --    ecrire("La valeur de ligne doit être positive");
+   -- end loop;
+
+
+
     ecrire("Nombre de colonnes : "); lire(nb_colone);
     loop
         ecrire("Nombre de mines : "); lire(nb_mine);
         if ( nb_mine > nb_ligne * nb_colone) then
-            ecrire_ligne("C'était sur");
+            ecrire_ligne("Le nombre de mine ne peut etre superieur à nb_ligne * nb_colone");
         end if;
         exit when nb_mine < nb_ligne * nb_colone;
     end loop;
@@ -25,13 +36,14 @@ begin
             Affiche(Grille, false);
             Saisie( nb_ligne,  nb_colone, Grille);
             DevoileCase(Grille, nb_ligne, nb_colone);
+           Perdu := DefaiteJoueur(Grille,nb_ligne,nb_colone);
         end loop;
         Affiche(Grille, false);
         if Perdu then
-            ecrire_ligne("Mais c'était sur enfaite !");
+            ecrire_ligne("Et ca fait BIM BAM BOUMMMM!!!!");
             Affiche(Grille, true);
         else
-            ecrire("Mais voila j'ai un niveau chall je les explose ces fils de pute");
+            ecrire("Bravo pour votre victoire");
         end if;
     end;
 end demineur_texte;

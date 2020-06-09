@@ -15,14 +15,12 @@ package p_demineur_modele is
 
 
 	procedure InitialiseGrille (G : out TV_Grille ; NbMines : in natural);
-
 	--{NbMines < G'length(1)*G'length(2)} => {NbMines ont été placées au hasard dans G ; toutes les cases sont couvertes}
 
-	function NombreMinesAutour (
-		G : in		TV_Grille;  
-		L : in		positive;   
-		C : in		positive ) 
-	return natural; 
+	function DefaiteJoueur (G: in TV_Grille; L, C : in Positive) return Boolean;
+	--{}=>{vrai si une case est découverte et occupée}
+
+	function NombreMineAutour(G : in TV_Grille; L : in positive; C : in positive) return natural;
 	--{} => {résultat = le nombre de mines présentes dans les cases adjacentes à la case (L,C) de la grille G}
 
 	procedure DevoileCase (

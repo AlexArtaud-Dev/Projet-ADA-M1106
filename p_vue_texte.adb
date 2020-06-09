@@ -9,28 +9,45 @@ package body p_vue_texte is
     procedure Affiche(G : in out TV_Grille; Triche : in boolean) is
         --{} => {Affiche la grille de jeu}
         C : TR_Case;
+        i : integer := 1;
+        s : integer := 0;
     begin 
         -- Libre => pas de bombe
-        -- Vide => rien autour (verticale, horizontale, diagonale) 
+        -- Vide => rien autour (verticale, horizontale, diagonale)
+        ecrire(" +");
+        for coln in G'Range(2) loop
+            ecrire(" -");
+        end loop;
+        ecrire(" +");
+        a_la_ligne;
         for ligne in G'Range(1) loop
+             ecrire(" |");
             for colonne in G'Range(2) loop
                 C := G(ligne, colonne);
                 if (C.Etat /= decouverte) then
-                    ecrire(" * ");
+                    ecrire(" *");
                 elsif (C.Occupee= false and C.Etat = decouverte) then
-                    if (NombreMinesAutour(G, ligne, colonne) > 0) then ecrire(NombreMinesAutour(G, ligne, colonne));
+                    if (NombreMineAutour(G, ligne, colonne) > 0) then ecrire(NombreMineAutour(G, ligne, colonne));
                     else
-                        ecrire(" . ");
+                        ecrire(" .");
                     end if;
                elsif (C.Etat = marquee) then
-                    ecrire(" M ");
+                    ecrire(" m");
                elsif (C.Occupee and Triche) then
-                    ecrire(" K "); -- If triche is true then we want to see the bombs 1.2 3
+                    ecrire(" k"); -- If triche is true then we want to see the bombs 1.2 3
                else 
-                    ecrire(" * "); -- If triche est false nous ne permet pas aux utilisateurs de voir les bombes
+                    ecrire(" *"); -- If triche est false nous ne permet pas aux utilisateurs de voir les bombes
                end if; 
             end loop;
+            ecrire(" |"); ecrire(ligne);
+            a_la_ligne;
         end loop;
+        ecrire(" +");
+        for coln in G'Range(2) loop
+            ecrire(" -");
+        end loop;
+        ecrire(" +");
+        a_la_ligne;
     end Affiche;
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -39,18 +56,19 @@ package body p_vue_texte is
         --{}=> {Permet la saisie par l'utilisateur d'une colonne et d'une ligne}
     begin
         loop
-              ecrire("Donner le numéro de la colonne souhaitée :"); lire(C);
-              if C > G'Last(2) or C < 1 
-              then ecrire("Le n° de la ligne ne peut être <  à 1 et >  à " & image(G'last(1))); --Vérification que le numéro de la colonne soit dans l'intervalle
+        a_la_ligne;
+              ecrire("Donnez le numéro de la colonne souhaitee :"); lire(C);
+              if G'Last(2) < C or 1 > C 
+              then ecrire("Le chiffre fourni est invalide"); --Vérification que le numéro de la colonne soit dans l'intervalle
               end if;
-              exit when C <= G'last(2) and C > 0;
+              exit when G'last(2) >= C   and 0 < C;
         end loop;
         loop
-              ecrire("Donner le numéro de la ligne souhaitée :"); lire(L);
-              if L > G'Last(1) or L < 1 
-              then ecrire("Le n° de la ligne ne peut être <  à 1 et >  à " & image(G'last(1))); --Vérification que le numéro de la ligne soit dans l'intervalle
+              ecrire("Donnez le numéro de la ligne souhaitee :"); lire(L);
+              if G'Last(1) < L  or 1 > L 
+              then ecrire("Le chiffre fourni est invalid"); --Vérification que le numéro de la ligne soit dans l'intervalle
               end if;
-            exit when L <= G'last(1) and L > 0;
+            exit when G'last(1) >= L and 0 < L;
         end loop;
     end Saisie;
 
