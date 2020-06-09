@@ -49,11 +49,11 @@ begin
     for j in -1..1 loop
       for k in -1..1 loop
          if not (j = 0 or k = 0) and (L + j in G'range (1) and C + k in G'range (2)) then
-          DevoileCase (G, L + j, C + k));
+          DevoileCase (G, L + j, C + k);
         end if;
       end loop;
     end loop;
-  enf if;
+  end if;
 end DevoileCase;
 
   procedure MarqueCase (G : in out TV_Grille; L : in positive ; C : in positive ) is
