@@ -92,12 +92,11 @@ package body p_demineur_modele is
 		gen : Generator;
 		x, y : Positive;
 	begin
-		Reset(gen); 
 		for ligne in G'range(1) loop -- range(1) = première dim
 			for colonne in G'range(2) loop -- range(2) = deuxieme dim
 			G(ligne, colonne).Etat := couverte; -- 
 				for k in 1..NbMines loop
-					--Reset(gen);
+					Reset(gen);
 					x := random(gen);
 					y := random(gen);
 					G(x, y).Occupee := true; -- mise en place des bombes aux coordonnées
@@ -110,6 +109,16 @@ package body p_demineur_modele is
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 end p_demineur_modele;
+
+	ChangColonne := string(1..7);
+	ChangLigne := string(1..5);
+
+--while nombreColonne = 1 and nombreLigne = 1 loop
+
+--	ecrire("Vous ne pouvez pas avoir les colonnes et lignes =1. Que voulez vous changer ? (colonne/ligne)")
+
+-- 		if 
+
 
  
 
