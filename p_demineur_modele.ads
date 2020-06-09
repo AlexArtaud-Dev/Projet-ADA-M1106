@@ -14,9 +14,8 @@ package p_demineur_modele is
 	Type TV_Around is array(1..2) of integer ;
 
 
-	procedure InitialiseGrille (
-		G : out		TV_Grille;
-		NbMines : in natural );
+	procedure InitialiseGrille (G : out TV_Grille ; NbMines : in natural);
+
 	--{NbMines < G'length(1)*G'length(2)} => {NbMines ont été placées au hasard dans G ; toutes les cases sont couvertes}
 
 	function NombreMinesAutour (

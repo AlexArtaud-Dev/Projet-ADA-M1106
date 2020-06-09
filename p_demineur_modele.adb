@@ -85,7 +85,7 @@ package body p_demineur_modele is
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 
-	procedure InitialiseGrille (G : out TV_Grille ; NbMines : in natural ) is
+	procedure InitialiseGrille (G : out TV_Grille ; NbMines : in natural) is
 	  --{NbMines < G'length(1)*G'length(2)} => {NbMines ont été placées au hasard dans G ; toutes les cases sont couvertes}
 	 
 		package randomizer is new Ada.Numerics.Discrete_Random(Positive); use randomizer;
@@ -97,13 +97,32 @@ package body p_demineur_modele is
 			G(ligne, colonne).Etat := couverte; -- 
 				for k in 1..NbMines loop
 					Reset(gen);
-					x := random(gen);
-					y := random(gen);
+
+					x := random(gen) mod G'length(1);
+					y := random(gen) mod G'length(2);
+ 
+
+					ecrire_ligne("---------------------");
+					ecrire("Nbmines: "); ecrire_ligne(NbMines);
+					ecrire("k: "); ecrire_ligne(k);
+					ecrire_ligne(x);
+					ecrire_ligne(y);
+					ecrire_ligne("---------------------");
+
 					G(x, y).Occupee := true; -- mise en place des bombes aux coordonnées
 				end loop;
 			end loop;
 		end loop;
 	end InitialiseGrille;
+
+
+
+
+
+
+
+
+
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -122,9 +141,12 @@ end p_demineur_modele;
 -- 		if ChangColonne = colonne then
 --			ecrire("Entrez le nombre de colonne"); lire (colonne);
 --		elsif
---			ecrire("");
-
+--			ecrire("Entrez le nombre de ligne"); lire (ligne);
+--		else
+--			ecrire("Mauvaise valeur entrée");
+--		end if;
+-- end loop;-- end loop;
  
-
+    
 
 

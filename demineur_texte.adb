@@ -11,8 +11,8 @@ begin
     ecrire("Nombre de colonnes : "); lire(nb_colone);
     loop
         ecrire("Nombre de mines : "); lire(nb_mine);
-        if not ( nb_mine < nb_ligne * nb_colone and nb_mine <= 0) then
-            ecrire_ligne("Mauvais nombre de mines.");
+        if ( nb_mine > nb_ligne * nb_colone) then
+            ecrire_ligne("C'était sur");
         end if;
         exit when nb_mine < nb_ligne * nb_colone;
     end loop;
@@ -25,7 +25,6 @@ begin
             Affiche(Grille, false);
             Saisie( nb_ligne,  nb_colone, Grille);
             DevoileCase(Grille, nb_ligne, nb_colone);
-         --   Defaite(Grille, Perdu);
         end loop;
         Affiche(Grille, false);
         if Perdu then
