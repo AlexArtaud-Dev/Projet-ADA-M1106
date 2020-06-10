@@ -50,7 +50,8 @@ package p_fenbase is
     -- FL_PUSH_BUTTON (retourne une valeur si relâché, reste enfoncé jusqu'à nouveau clic)  
     -- FL_MENU_BUTTON (retourne une valeur quand pressé) 
     -- FL_TOUCH_BUTTON (retourne une valeur tant que l'utilisateur le presse) 
-    -- FL_RETURN_BUTTON (bouton classique mais qui réagit à la touche ENTER du clavier) -- ajouter un bouton de forme circulaire -------------------------------------  procedure AjouterBoutonRond (          
+    -- FL_RETURN_BUTTON (bouton classique mais qui réagit à la touche ENTER du clavier) -- ajouter un bouton de forme circulaire -------------------------------------  
+    procedure AjouterBoutonRond (          
     F      	: in out TR_Fenetre;     	-- la fenêtre où on ajoute 
     NomElement : in   String;       	-- le nom du bouton (unique) 
     Texte    : in   String;       	-- le texte affiché dans le bouton 
