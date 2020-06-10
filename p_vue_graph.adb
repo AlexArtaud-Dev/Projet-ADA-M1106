@@ -44,9 +44,12 @@ package body p_vue_graph is
     --{F, Nom, X, Y: Longueur, Largeur de la fenetre} => { ouvre une fenetre de jeu }
     begin
         F := DebutFenetre("Jouer", Fenetre_Size.X, Fenetre_Size.Y);
-            AjouterBouton(F,"Abandonner","ABANDONNER", Fenetre_Size.X/2-50, Button_Size.Y*1, Button_Size.X, Button_Size.Y); -- Abandonner une partie
-            AjouterBouton(F,"Restart","RESTART", Fenetre_Size.X/2-50, 10, Button_Size.Y*2, Button_Size.Y); -- Redemarrer une partie
-            AjouterBouton(F,"ChangerNom","CHANGER NOM", Fenetre_Size.X/2-50, Button_Size.Y*3, Button_Size.X, Button_Size.Y); -- Changer de nom
+            AjouterBouton(F,"Abandonner","ABANDONNER", Fenetre_Size.X/2-50, Button_Size.Y*1, (Fenetre_Size.X/100)*15, (Fenetre_Size.Y/100)*5); 
+            AjouterBouton(F,"Restart","RESTART", Fenetre_Size.X/2-50, 10, (Fenetre_Size.X/100)*15, (Fenetre_Size.Y/100)*5); -- Redemarrer une partie
+            AjouterBouton(F,"ChangerNom","CHANGER NOM", Fenetre_Size.X/2-50, Button_Size.Y*3, (Fenetre_Size.X/100)*15, (Fenetre_Size.Y/100)*5); -- Changer de nom
+
+            
+            -- 15%
         FinFenetre(F);
         MontrerFenetre(F);
          declare 
@@ -72,12 +75,6 @@ package body p_vue_graph is
             AjouterImage(F, "aide","aide.xpm", "  ", 70, 20 ,700,150 );
             AjouterImage(F, "regles","regles.xpm", "  ",12, 170 ,900,200 );
             AjouterImage(F, "controle","controle.xpm", "  ",12, 335 ,900,200 );
-           
-
-            --AjouterTexte(F, "Controles",
-              --  "Pour Afficher les cases vous devez cliquer gauche sur celle-ci. Pour marquer les cases que vous pensez qu'elles habritent une bombe cliquez droit.", 
-                --0, 0, 400, 400
-            --);
         FinFenetre(F);
         MontrerFenetre(F);
 
