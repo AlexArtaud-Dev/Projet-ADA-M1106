@@ -1,5 +1,6 @@
 with p_esiut;use p_esiut;
 with forms;use forms;
+with p_demineur_modele; use p_demineur_modele;
 with p_fenbase;use p_fenbase;
 
 package p_vue_graph is 
@@ -8,24 +9,24 @@ package p_vue_graph is
 
     type T_Fenetre is (Main, Aide, Score, Jeu);
 
-    type TR_Fenetre is record
+    type TR_Fenetre_Size is record
         X : Positive;
         Y : Positive;
     end record;
 
-    type TR_Case is record 
+    type TR_Case_Size is record 
         X : Positive;
         Y : Positive;
     end record;
 
-    type TR_Button is record 
+    type TR_Button_Size is record 
         X : Positive;
         Y : Positive;
     end record;
 
-    Fenetre_Size : TR_Fenetre := (500, 700);
-    Case_Size : TR_Case := (20, 20);
-    Button_Size : TR_Button := (50, 100);
+    Fenetre_Size : TR_Fenetre_Size := (820, 580);
+    Case_Size : TR_Case_Size := (20, 20);
+    Button_Size : TR_Button_Size := (45, 60);
 
     --------------------------------------------------------------------------------------
 
@@ -33,7 +34,7 @@ package p_vue_graph is
         Colonne : Positive;
         Ligne : Positive;
         NombreBombe : Positive;
-    end TR_Difficulte;
+    end record;
 
     type T_Difficulte is (Facile, Moyen, Difficile);
 
@@ -41,13 +42,13 @@ package p_vue_graph is
 
     --------------------------------------------------------------------------------------
     
-    function Main return;
-    function Score;
-    function Aide;
+    procedure Main (F : in out TR_Fenetre);
+    procedure Score (F : in out TR_Fenetre);
+    procedure Aide (F : in out TR_Fenetre);
 	function InitNom return string;
 
-    procedure CreeFenetreJeu (F : in out TR_Fenetre; Nom : string; X, Y : in Natural);
-    procedure GenererGrille(G : in out TV_Grille; NombreBombe, Colone, Ligne : in out Positive);
+    procedure Jouer (F : in out TR_Fenetre);
+    --procedure GenererGrille(G : in out TV_Grille; NombreBombe : in out Positive);
 
     --------------------------------------------------------------------------------------
         
