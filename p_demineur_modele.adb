@@ -1,5 +1,5 @@
---with p_esiut; use p_esiut;
 with text_io; use text_io;
+with p_esiut;use p_esiut;
 
 with Ada.Numerics.Discrete_Random;
 
@@ -13,81 +13,73 @@ package body p_demineur_modele is
     --{} => {La case en position (L,C) dans la grille G est dévoilée et éventuellement ses voisines}
     
     begin
-        if G(L,C).Etat = couverte then
+        if G(L, C).Etat = couverte then
             if NombreMineAutour(G, L, C) = 0 
-            then G(L,C).Etat := decouverte;
-        declare
-                L1, L2,C1, C2 : natural :=0; --Variables pour les lignes et colonnes à check
+            then G(L, C).Etat := decouverte;
+            declare
+                L1, L2, C1, C2 : natural :=0; --Variables pour les lignes et colonnes à check
             begin
                 --Check ligne
                 if L = 1 -- Check si le curseur est sur la premiere ligne (qui veut dire qu'on ne peut pas chercher la ligne au dessus car elle n'existe pas)
                 then L1 := 1; L2 := 0; -- On regarde donc la ligne du dessous
-                  elsif L = G'last (1) -- Check si le curseur est sur la dernière ligne (qui veut dire qu'on ne peut pas chercher la ligne en dessous car elle n'existe pas)
-                  then L1 := 0; L2 := 1;  -- On regarde donc la ligne au dessus
-                  else L1 := 1; L2 := 1; -- Dernière possibilité plausible; le curseur n'est ni sur la première ni sur la dernière ligne et donc on check au dessus et en dessous
+                elsif L = G'last (1) -- Check si le curseur est sur la dernière ligne (qui veut dire qu'on ne peut pas chercher la ligne en dessous car elle n'existe pas)
+                then L1 := 0; L2 := 1;  -- On regarde donc la ligne au dessus
+                else L1 := 1; L2 := 1; -- Dernière possibilité plausible; le curseur n'est ni sur la première ni sur la dernière ligne et donc on check au dessus et en dessous
                 end if;
                 -- Check colonne
                 if C = 1 -- Check si le curseur est sur la premiere colonne (qui veut dire qu'on ne peut pas chercher la colonne de gauche car elle n'existe pas)
                 then C1 := 1; C2 := 0; -- On regarde donc la colonne de droite
-                    elsif C = G'last (2) -- Check si le curseur est sur la dernière colonne (qui veut dire qu'on ne peut pas chercher la colonne de droite car elle n'existe pas)
-                    then C1 := 0; C2 := 1; -- On regarde donc la colonne de gauche
-                    else C1 := 1; C2 := 1; -- Dernière possibilité plausible; le curseur n'est ni sur la première ni sur la dernière colonne et donc on check à droite et à gauche
+                elsif C = G'last (2) -- Check si le curseur est sur la dernière colonne (qui veut dire qu'on ne peut pas chercher la colonne de droite car elle n'existe pas)
+                then C1 := 0; C2 := 1; -- On regarde donc la colonne de gauche
+                else C1 := 1; C2 := 1; -- Dernière possibilité plausible; le curseur n'est ni sur la première ni sur la dernière colonne et donc on check à droite et à gauche
                 end if;
                 -- Grace à la partie du dessus, on trouve i et j qui vont nous permettre de dévoiler les cases en les reinjectant
                 for i in L-L2..L+L1 loop
-                for j in C-C2..C+C1 loop
-                DevoileCase(G,I,J);
-                end loop;
+                    for j in C-C2..C+C1 loop
+                        DevoileCase(G, I, J);
+                    end loop;
                 end loop;
             end;
-            else
-            G(L,C).Etat := decouverte;
-        end if;
+        else
+            G(L, C).Etat := decouverte;
+            end if;
         end if;
     end DevoileCase;
-
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 
     function NombreMineAutour(G : in TV_Grille; L : in positive; C : in positive) return natural is
-      -- --{} =>{résultat = nombre de mines présentes dans les cases adjacents à la case (L,C) de G}
-     
-     -- On reprend la meme base de fonctione que pour DevoileCase mais en modifiant la fin pour pouvoir return un natural qui nous permettra de vérifier une condition dans p_vue
-      L1, L2,C1, C2 : natural :=0;
-      k : natural := 0;
-
+        -- --{} =>{résultat = nombre de mines présentes dans les cases adjacents à la case (L,C) de G}
+        -- On reprend la meme base de fonctione que pour DevoileCase mais en modifiant la fin pour pouvoir return un natural qui nous permettra de vérifier une condition dans p_vue
+        L1, L2,C1, C2 : natural :=0;
+        k : natural := 0;
     begin
-
-     --Check ligne
-
-                if L = 1 -- Check si le curseur est sur la premiere ligne (qui veut dire qu'on ne peut pas chercher la ligne au dessus car elle n'existe pas)
-                then L1 := 1; L2 := 0; -- On regarde donc la ligne du dessous
-                  elsif L = G'last (1) -- Check si le curseur est sur la dernière ligne (qui veut dire qu'on ne peut pas chercher la ligne en dessous car elle n'existe pas)
-                  then L1 := 0; L2 := 1;  -- On regarde donc la ligne au dessus
-                  else L1 := 1; L2 := 1; -- Dernière possibilité plausible; le curseur n'est ni sur la première ni sur la dernière ligne et donc on check au dessus et en dessous
+        --Check ligne
+        if L = 1 -- Check si le curseur est sur la premiere ligne (qui veut dire qu'on ne peut pas chercher la ligne au dessus car elle n'existe pas)
+        then L1 := 1; L2 := 0; -- On regarde donc la ligne du dessous
+        elsif L = G'last(1) -- Check si le curseur est sur la dernière ligne (qui veut dire qu'on ne peut pas chercher la ligne en dessous car elle n'existe pas)
+        then L1 := 0; L2 := 1;  -- On regarde donc la ligne au dessus
+        else L1 := 1; L2 := 1; -- Dernière possibilité plausible; le curseur n'est ni sur la première ni sur la dernière ligne et donc on check au dessus et en dessous
+        end if;
+        -- Check colonne
+        if C = 1 -- Check si le curseur est sur la premiere colonne (qui veut dire qu'on ne peut pas chercher la colonne de gauche car elle n'existe pas)
+        then C1 := 1; C2 := 0; -- On regarde donc la colonne de droite
+        elsif C = G'last(2) -- Check si le curseur est sur la dernière colonne (qui veut dire qu'on ne peut pas chercher la colonne de droite car elle n'existe pas)
+        then C1 := 0; C2 := 1; -- On regarde donc la colonne de gauche
+        else C1 := 1; C2 := 1; -- Dernière possibilité plausible; le curseur n'est ni sur la première ni sur la dernière colonne et donc on check à droite et à gauche
+        end if;
+        for i in L-L2..L+L1 loop
+            for j in C-C2..C+C1 loop    
+                if G(i, j).Occupee 
+                then k := k + 1;
                 end if;
-
-                -- Check colonne
-
-                if C = 1 -- Check si le curseur est sur la premiere colonne (qui veut dire qu'on ne peut pas chercher la colonne de gauche car elle n'existe pas)
-                then C1 := 1; C2 := 0; -- On regarde donc la colonne de droite
-                    elsif C = G'last (2) -- Check si le curseur est sur la dernière colonne (qui veut dire qu'on ne peut pas chercher la colonne de droite car elle n'existe pas)
-                    then C1 := 0; C2 := 1; -- On regarde donc la colonne de gauche
-                    else C1 := 1; C2 := 1; -- Dernière possibilité plausible; le curseur n'est ni sur la première ni sur la dernière colonne et donc on check à droite et à gauche
-                end if;
-
-     
-                for i in L-L2..L+L1 loop
-                   for j in C-C2..C+C1 loop
-                     if G(i,j).Occupee 
-                     then k := k + 1;
-                     end if;
-                   end loop;
-                end loop;
-                return k;
+            end loop;
+        end loop;
+        return k;
     end NombreMineAutour;
+
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -117,7 +109,7 @@ package body p_demineur_modele is
 			    end if;
 			end loop;
 		end loop;
-	return victoire;
+	    return victoire;
 	end VictoireJoueur;
 
     function DefaiteJoueur (G: in TV_Grille; L, C : in Positive) return Boolean is 
@@ -125,18 +117,21 @@ package body p_demineur_modele is
     begin
         return G(L, C).Occupee;
     end DefaiteJoueur;
+
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 
 	procedure InitialiseGrille (G : out TV_Grille ; NbMines : in natural) is
-	  --{NbMines < G'length(1)*G'length(2)} => {NbMines ont été placées au hasard dans G ; toutes les cases sont couvertes}
+        --{NbMines < G'length(1)*G'length(2)} => {NbMines ont été placées au hasard dans G ; toutes les cases sont couvertes}
 	 
-	 subtype randomCase is  positive range 1..(G'length(1)*G'length(2));
-	 package randomizer is new Ada.Numerics.Discrete_Random(randomCase); use randomizer;
+        subtype CaseR is  positive range 1..(G'length(1)*G'length(2)); -- Défini un subtype CaseR positif entre 1 et le nombre de case max
+        package randomizer is new Ada.Numerics.Discrete_Random(CaseR); use randomizer; --Implémentation du randomizer sur CaseR
 
 		gen : Generator;
-		CaseC : randomCase;
+		CaseC : CaseR; 
 		x, y : Positive;
+        counter : integer := 0;
 	begin
 		Reset(gen);
 		for ligne in G'range(1) loop -- range(1) = première dim
@@ -146,20 +141,24 @@ package body p_demineur_modele is
 			end loop;
 		end loop;
 		
-		for k in 1..NbMines loop
-			CaseC :=  random(gen);
+		while counter < NbMines loop
+			CaseC :=  random(gen); -- Générateur de nombre aléatoire dans le domaine défini au préalable
+
 			x := integer((CaseC - 1)/G'length(1)) + 1;
 			y := G'length(1) - ((G'length(1)*G'length(2) - CaseC) mod G'length(1));
-			while not G(x, y).Occupee loop
-				G(x, y).Occupee := true; -- mise en place des bombes aux coordonnées
-			end loop;
+
+            if x <= G'Length(1) and y <= G'Length(2) then
+                if not G(x, y).Occupee then -- Cela permet de remplir les cases innocupées et les occuper.
+				    G(x, y).Occupee := true;
+                    counter := counter+1;
+			    end if;
+            end if;
+
+            ecrire("counter: "); ecrire_ligne(counter);
 		end loop;
 	end InitialiseGrille;
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
+
+
 end p_demineur_modele;
-
-
-    
-
-

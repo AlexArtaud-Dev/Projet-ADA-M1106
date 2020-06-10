@@ -4,33 +4,45 @@ with p_esiut; use p_esiut;
 
 procedure demineur_texte is
     nb_ligne, nb_colone, nb_mine: integer;
-    Perdu, Abandon : boolean := false;
+    Perdu, Abandon : boolean;
     Rejouer : string(1..3);
+    max_ligne_colonne : integer;
 begin
-    loop --boucle pour rejouer
+    loop
+
+        -------------------------
+        -------------------------   
         Perdu := false;
+        Abandon := false;
         nb_ligne := 0;
         nb_colone := 0; 
         nb_mine := 0;
+        max_ligne_colonne := 50;
+        -------------------------
+        -------------------------
 
-        while nb_ligne < 1 or nb_colone < 1 loop -- vérifier que les colonnes et lignes > 1
+        while (nb_ligne < 1 or nb_colone < 1) or (nb_ligne > max_ligne_colonne or nb_colone > max_ligne_colonne) loop
             clr_ecran;
             ecrire("Nombre de lignes : "); lire(nb_ligne);
             ecrire("Nombre de colonnes : "); lire(nb_colone);
             if nb_ligne <= 0 or nb_colone <= 0 then
-                ecrire_ligne("Le nombre de ligne ainsi que de colonne doit etre > 0 ");
+                ecrire_ligne("Le nombre de lignes et de colonnes doit etre superieur 0 ");
                 pause;
             end if;
+            if nb_ligne > max_ligne_colonne or nb_colone > max_ligne_colonne then
+                ecrire("Le nombre de lignes et de colonnes doit etre inferieur a "); ecrire_ligne(max_ligne_colonne);
+                pause;
+            end if; 
         end loop;
-
-        while nb_mine <= 0 or (nb_mine > nb_ligne * nb_colone) loop --on rentre dans la boucle ssi le nb_mine>nb_ligne*nb_colone 
+                                                                        
+        while nb_mine <= 0 or (nb_mine >= nb_ligne * nb_colone) loop
             clr_ecran;
             ecrire("Nombre de mines : "); lire(nb_mine);
-            if nb_mine > (nb_ligne * nb_colone) then
-                ecrire_ligne("Le nombre de mine ne peut etre superieur au  nb_ligne * nb_colone");
+            if nb_mine >= (nb_ligne * nb_colone) then
+                ecrire("Le nombre de mine ne peut etre superieur ou egale a "); ecrire_ligne(nb_ligne * nb_colone);
                 pause;
             elsif nb_mine <= 0 then
-                ecrire("Le nombre de mine doit etre superieur à 1 ");
+                ecrire("Le nombre de mine doit etre superieur a 0 ");
                 pause;
             end if;
         end loop;
@@ -51,20 +63,19 @@ begin
                 end if;
             end loop;
             clr_ecran;
-            --Affiche(Grille, false);
+
+            Affiche(Grille, true);
+
             if Perdu or Abandon then
-                ecrire_ligne("Et ca fait BIM BAM BOUMMMM!!!!");
-                Affiche(Grille, true);
+                ecrire_ligne("Vous avez perdu.. ");
+                
             else
-                ecrire_ligne("Bravo pour votre victoire grosse salope !!! ");
-                Affiche(Grille, true);
+                ecrire_ligne("Felicitation!");
             end if;
         end;
 
         ecrire_ligne("Voulez vous rejouer ? (oui pour rejouer, autre pour quitter) "); lire(rejouer);
-        exit when rejouer /= "oui"; --sortie si l'utilisateur en veut pas rejouer
-  
+        exit when rejouer /= "oui";
     end loop;
+    clr_ecran;  
 end demineur_texte;
-
--- Si case est libre => la case devient ocupée. 
