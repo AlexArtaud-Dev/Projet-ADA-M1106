@@ -13,39 +13,30 @@ package body p_demineur_modele is
     --{} => {La case en position (L,C) dans la grille G est dévoilée et éventuellement ses voisines}
     
     begin
-
         if G(L,C).Etat = couverte then
             if NombreMineAutour(G, L, C) = 0 
             then G(L,C).Etat := decouverte;
         declare
                 L1, L2,C1, C2 : natural :=0; --Variables pour les lignes et colonnes à check
             begin
-
                 --Check ligne
-
                 if L = 1 -- Check si le curseur est sur la premiere ligne (qui veut dire qu'on ne peut pas chercher la ligne au dessus car elle n'existe pas)
                 then L1 := 1; L2 := 0; -- On regarde donc la ligne du dessous
                   elsif L = G'last (1) -- Check si le curseur est sur la dernière ligne (qui veut dire qu'on ne peut pas chercher la ligne en dessous car elle n'existe pas)
                   then L1 := 0; L2 := 1;  -- On regarde donc la ligne au dessus
                   else L1 := 1; L2 := 1; -- Dernière possibilité plausible; le curseur n'est ni sur la première ni sur la dernière ligne et donc on check au dessus et en dessous
                 end if;
-
                 -- Check colonne
-
                 if C = 1 -- Check si le curseur est sur la premiere colonne (qui veut dire qu'on ne peut pas chercher la colonne de gauche car elle n'existe pas)
                 then C1 := 1; C2 := 0; -- On regarde donc la colonne de droite
                     elsif C = G'last (2) -- Check si le curseur est sur la dernière colonne (qui veut dire qu'on ne peut pas chercher la colonne de droite car elle n'existe pas)
                     then C1 := 0; C2 := 1; -- On regarde donc la colonne de gauche
                     else C1 := 1; C2 := 1; -- Dernière possibilité plausible; le curseur n'est ni sur la première ni sur la dernière colonne et donc on check à droite et à gauche
                 end if;
-
                 -- Grace à la partie du dessus, on trouve i et j qui vont nous permettre de dévoiler les cases en les reinjectant
                 for i in L-L2..L+L1 loop
                 for j in C-C2..C+C1 loop
-
-
                 DevoileCase(G,I,J);
-
                 end loop;
                 end loop;
             end;
@@ -146,7 +137,6 @@ package body p_demineur_modele is
 		gen : Generator;
 		CaseC : randomCase;
 		x, y : Positive;
-
 	begin
 		Reset(gen);
 		for ligne in G'range(1) loop -- range(1) = première dim
