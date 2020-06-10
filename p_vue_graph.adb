@@ -68,17 +68,16 @@ package body p_vue_graph is
     --{} => {ouvre une fenetre avec les règles pour aider l'utilisateur}
     begin
         F := DebutFenetre("Aide", Fenetre_Size.X, Fenetre_Size.Y);
-            AjouterBouton(F, "Retour", "RETOUR", 140, 90, 55, 30);
+            AjouterBoutonImage(F,"Retour","","retourbouton.xpm", 20, 500, 150, 50);--C'est Ilyes qui la trouvé
+            AjouterImage(F, "aide","aide.xpm", "  ", 70, 20 ,700,150 );
+            AjouterImage(F, "regles","regles.xpm", "  ",12, 170 ,900,200 );
+            AjouterImage(F, "controle","controle.xpm", "  ",12, 335 ,900,200 );
+           
 
-            AjouterTexte(F, "Regles",
-                "Vous disposez d'une grille contenant des mines cachées. En cliquant sur une case vous connaissez le nombre de mines se trouvant dans les cases (8 au maximum) qui l'entourent. Le but du jeu est de détecter toutes les mines sans cliquer dessus ",
-                Button_Size.X, Button_Size.Y, 100,100 
-            );
-
-            AjouterTexte(F, "Controles",
-                "Pour Afficher les cases vous devez cliquer gauche sur celle-ci. Pour marquer les cases que vous pensez qu'elles habritent une bombe cliquez droit.", 
-                Fenetre_Size.X, Fenetre_Size.Y, 100, 100
-            );
+            --AjouterTexte(F, "Controles",
+              --  "Pour Afficher les cases vous devez cliquer gauche sur celle-ci. Pour marquer les cases que vous pensez qu'elles habritent une bombe cliquez droit.", 
+                --0, 0, 400, 400
+            --);
         FinFenetre(F);
         MontrerFenetre(F);
 
@@ -86,8 +85,8 @@ package body p_vue_graph is
             ClickedButton : string := AttendreBouton(F);
         begin
             if ClickedButton = "Retour" then
-                Main(F);
                 CacherFenetre(F);
+                Main(F);
             else 
                 CacherFenetre(F);
             end if;
@@ -109,16 +108,21 @@ package body p_vue_graph is
         DifficulteJoueur : TR_Difficulte;
     begin
         F := DebutFenetre("NomJoueur", Fenetre_Size.X, Fenetre_Size.Y);
-            AjouterBouton(F,"Valider","VALIDER",140,90,55,30);
-            AjouterBouton(F,"Annuler","ANNULER",200,90,55,30);
-            AjouterChamp(F, "Nom", "Nom","Entrer Nom",160,40,100,30);
+            AjouterImage(F, "Joueur","joueur.xpm", "  ", 70, 20 ,700,150 );
+            AjouterImage(F, "pseudo","pseudo.xpm", "  ", 50, 160 ,700,150 );
+            AjouterBouton(F,"Annuler","ANNULER",285,310,114,30);           
+            AjouterBouton(F,"Valider","VALIDER",400,310,114,30);
+            AjouterChamp(F, "Nom","","Entrer Nom",285,270,230,30);
+            ChangerStyleTexte(F,"Annuler",FL_BOLD_STYLE);
+            ChangerStyleTexte(F,"Valider",FL_BOLD_STYLE);
+            ChangerStyleTexte(F,"Nom",FL_ITALIC_STYLE);
         FinFenetre(F);
         MontrerFenetre(F);
 
         declare 
             ClickedButton : string := AttendreBouton(F);
         begin
-            if ClickedButton = "Valider" then
+            if ClickedButton = "Valider" then --A FIX, ne passe pas à difficulté quand un pseudo est renseigné
                 NomJoueur := ConsulterContenu(F, "Nom");
                 CacherFenetre(F);
                 Difficulte(F, DifficulteJoueur);
@@ -133,9 +137,11 @@ package body p_vue_graph is
     --{} => {ouvre une fenetre pour choisir la difficultée du jeu}
     begin
         F := DebutFenetre("Difficulte", Fenetre_Size.X, Fenetre_Size.Y);
-            AjouterBouton(F, "Facile", "FACILE",140,90,55,30);
-            AjouterBouton(F, "Moyen", "MOYEN",140,90,55,30);
-            AjouterBouton(F, "Difficile", "DIFFICILE",140,90,55,30);
+            AjouterImage(F, "Difficulte","difficulte.xpm", "  ", 70, 20 ,700,150 );
+            AjouterBouton(F,"Facile", "FACILE", 270, Button_Size.Y*1+160, Button_Size.X, Button_Size.Y);
+            AjouterBouton(F,"Moyen", "MOYEN", 270, Button_Size.Y*2+170, Button_Size.X, Button_Size.Y);
+            AjouterBouton(F,"Difficile", "DIFFICILE", 270, Button_Size.Y*3+180, Button_Size.X, Button_Size.Y);
+            
         FinFenetre(F);
         MontrerFenetre(F);
 
