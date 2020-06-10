@@ -13,9 +13,10 @@ package body p_vue_graph is
             AjouterBouton(F,"Score", "SCORE", 273, Button_Size.Y*2+180, Button_Size.X, Button_Size.Y);
             AjouterBouton(F,"Aide", "AIDE", 273, Button_Size.Y*3+190, Button_Size.X, Button_Size.Y);
             AjouterBouton(F,"Quitter", "QUITTER", 273, Button_Size.Y*4+200, Button_Size.X, Button_Size.Y);
-            AjouterImage(F, "tntxpm","tnt2.xpm", "  ", 45, 300 ,200,200 );
-            AjouterImage(F, "tntxpm","tnt3.xpm", "  ", 575, 300 ,200,200 );
- 
+            AjouterImage(F, "tnt1xpm","tnt2.xpm", "  ", 40, 300 ,200,200 );
+            AjouterImage(F, "tnt2xpm","tnt3.xpm", "  ", 580, 300 ,200,200 );
+            AjouterImage(F, "demineur","demineur.xpm", "  ", 68, 20 ,700,150 );
+            --ChangerCouleurFond(F, "Score", FL_TOMATO);
         FinFenetre(F);
         MontrerFenetre(F);
         
