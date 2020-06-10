@@ -53,7 +53,7 @@ package body p_demineur_modele is
     function NombreMineAutour(G : in TV_Grille; L : in positive; C : in positive) return natural is
         -- --{} =>{résultat = nombre de mines présentes dans les cases adjacents à la case (L,C) de G}
         -- On reprend la meme base de fonctione que pour DevoileCase mais en modifiant la fin pour pouvoir return un natural qui nous permettra de vérifier une condition dans p_vue
-        L1, L2,C1, C2 : natural :=0;
+        L1, L2, C1, C2 : natural :=0;
         k : natural := 0;
     begin
         --Check ligne
