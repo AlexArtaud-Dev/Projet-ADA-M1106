@@ -24,9 +24,9 @@ package p_vue_graph is
         Y : Positive;
     end record;
 
-    Fenetre_Size : TR_Fenetre_Size := (820, 580);
+    Fenetre_Size : TR_Fenetre_Size := (820, 580);--résolution fenetre
     Case_Size : TR_Case_Size := (20, 20);
-    Button_Size : TR_Button_Size := (45, 60);
+    Button_Size : TR_Button_Size := (280, 70);--Largeur,Hauteur des boutons
 
     --------------------------------------------------------------------------------------
 

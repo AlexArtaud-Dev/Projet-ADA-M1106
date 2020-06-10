@@ -6,22 +6,27 @@ package body p_vue_graph is
 
     procedure Main (F: in out TR_Fenetre) is 
     --{}=>{ouvre une fenetre principale avec les différents boutons}
-        NomJoueur : string(1..10) := (others => ' ');
+
     begin
         F:= DebutFenetre("Main", Fenetre_Size.X, Fenetre_Size.Y);
-            AjouterBoutonRond(F,"Jouer", "JOUER", 273, 0, 50);
-            AjouterBoutonRond(F,"Score", "SCORE", 273, 50,50);
-            AjouterBoutonRond(F,"Aide", "AIDE", 273, 100, 50);
-            AjouterBoutonRond(F,"Quitter", "QUITTER", 273, 150, 50);
+            AjouterBouton(F,"Jouer", "JOUER", 273, Button_Size.Y*1+170, Button_Size.X, Button_Size.Y);
+            AjouterBouton(F,"Score", "SCORE", 273, Button_Size.Y*2+180, Button_Size.X, Button_Size.Y);
+            AjouterBouton(F,"Aide", "AIDE", 273, Button_Size.Y*3+190, Button_Size.X, Button_Size.Y);
+            AjouterBouton(F,"Quitter", "QUITTER", 273, Button_Size.Y*4+200, Button_Size.X, Button_Size.Y);
+            AjouterImage(F, "tntxpm","tnt2.xpm", "  ", 45, 300 ,200,200 );
+            AjouterImage(F, "tntxpm","tnt3.xpm", "  ", 575, 300 ,200,200 );
+ 
         FinFenetre(F);
         MontrerFenetre(F);
         
         declare 
             ClickedButton : string := AttendreBouton(F);
+            NomJoueur:string(1..10) := (others =>(' '));
         begin
             if ClickedButton = "Score" then
                 CacherFenetre(F);
                 Score(F);
+                
             elsif ClickedButton = "Jouer" then
                 CacherFenetre(F);
                 Nom(F, NomJoueur);
@@ -66,12 +71,12 @@ package body p_vue_graph is
 
             AjouterTexte(F, "Regles",
                 "Vous disposez d'une grille contenant des mines cachées. En cliquant sur une case vous connaissez le nombre de mines se trouvant dans les cases (8 au maximum) qui l'entourent. Le but du jeu est de détecter toutes les mines sans cliquer dessus ",
-                Button_Size.X, Button_Size.Y, 10, 10
+                Button_Size.X, Button_Size.Y, 100,100 
             );
 
             AjouterTexte(F, "Controles",
                 "Pour Afficher les cases vous devez cliquer gauche sur celle-ci. Pour marquer les cases que vous pensez qu'elles habritent une bombe cliquez droit.", 
-                Fenetre_Size.X, Fenetre_Size.Y, 10, 10
+                Fenetre_Size.X, Fenetre_Size.Y, 100, 100
             );
         FinFenetre(F);
         MontrerFenetre(F);
