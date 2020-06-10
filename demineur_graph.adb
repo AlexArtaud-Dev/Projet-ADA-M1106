@@ -9,6 +9,8 @@ procedure demineur_graph is
 begin 
 	InitialiserFenetres;
 
+	Main;
+
     Nom := InitNom;
 
 	CreeFenetreJeu(F, "Denimeur", 500, 250);

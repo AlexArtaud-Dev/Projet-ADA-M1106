@@ -6,20 +6,26 @@ package p_vue_graph is
 
     --------------------------------------------------------------------------------------
 
-    type TR_Fenetre is record 
+    type T_Fenetre is (Main, Aide, Score, Jeu);
+
+    type TR_Fenetre is record
         X : Positive;
         Y : Positive;
-    end TR_Fenetre;
+    end record;
 
     type TR_Case is record 
         X : Positive;
         Y : Positive;
-    end TR_Case;
+    end record;
 
     type TR_Button is record 
         X : Positive;
         Y : Positive;
-    end TR_Button;
+    end record;
+
+    Fenetre_Size : TR_Fenetre := (500, 700);
+    Case_Size : TR_Case := (20, 20);
+    Button_Size : TR_Button := (50, 100);
 
     --------------------------------------------------------------------------------------
 
@@ -35,9 +41,13 @@ package p_vue_graph is
 
     --------------------------------------------------------------------------------------
     
+    function Main return;
+    function Score;
+    function Aide;
 	function InitNom return string;
+
     procedure CreeFenetreJeu (F : in out TR_Fenetre; Nom : string; X, Y : in Natural);
-    procedure InitGrille(G : in out TV_Grille; NombreBombe, Colone, Ligne : in out Positive);
+    procedure GenererGrille(G : in out TV_Grille; NombreBombe, Colone, Ligne : in out Positive);
 
     --------------------------------------------------------------------------------------
         
