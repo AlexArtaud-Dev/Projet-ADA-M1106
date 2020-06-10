@@ -44,12 +44,12 @@ package body p_vue_graph is
     --{F, Nom, X, Y: Longueur, Largeur de la fenetre} => { ouvre une fenetre de jeu }
     begin
         F := DebutFenetre("Jouer", Fenetre_Size.X, Fenetre_Size.Y);
-            AjouterBouton(F,"Abandonner","ABANDONNER", Fenetre_Size.X/2-50, Button_Size.Y*1, (Fenetre_Size.X/100)*15, (Fenetre_Size.Y/100)*5); 
-            AjouterBouton(F,"Restart","RESTART", Fenetre_Size.X/2-50, 10, (Fenetre_Size.X/100)*15, (Fenetre_Size.Y/100)*5); -- Redemarrer une partie
-            AjouterBouton(F,"ChangerNom","CHANGER NOM", Fenetre_Size.X/2-50, Button_Size.Y*3, (Fenetre_Size.X/100)*15, (Fenetre_Size.Y/100)*5); -- Changer de nom
-
-            
-            -- 15%
+            AjouterBouton(F,"Abandonner","ABANDONNER", Fenetre_Size.X-((Fenetre_Size.X/100)*17), (Fenetre_Size.Y/100)*37, (Fenetre_Size.X/100)*16, (Fenetre_Size.Y/100)*5); 
+            AjouterBouton(F,"Restart","RESTART", Fenetre_Size.X-((Fenetre_Size.X/100)*17), (Fenetre_Size.Y/100)*44, (Fenetre_Size.X/100)*16, (Fenetre_Size.Y/100)*5); -- Redemarrer une partie
+            AjouterBouton(F,"ChangerNom","CHANGER NOM", Fenetre_Size.X-((Fenetre_Size.X/100)*17), (Fenetre_Size.Y/100)*60, (Fenetre_Size.X/100)*16, (Fenetre_Size.Y/100)*5); -- Changer de nom
+            ChangerStyleTexte(F,"Abandonner",FL_BOLD_STYLE);
+            ChangerStyleTexte(F,"Restart",FL_BOLD_STYLE);
+            ChangerStyleTexte(F,"ChangerNom",FL_BOLD_STYLE);
         FinFenetre(F);
         MontrerFenetre(F);
          declare 
