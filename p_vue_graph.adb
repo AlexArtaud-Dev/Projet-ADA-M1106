@@ -9,32 +9,33 @@ package body p_vue_graph is
         NomJoueur : string(1..10) := (others => ' ');
     begin
         F:= DebutFenetre("Main", Fenetre_Size.X, Fenetre_Size.Y);
-            AjouterBoutonRond(F,"Jouer","JOUER", 273, 0, 50);
-            AjouterBoutonRond(F,"Score","SCORE", 273, 50,50);
-            AjouterBoutonRond(F,"Aide","AIDE", 273, 100, 50);
-            AjouterBoutonRond(F,"Quitter","QUITTER", 0, 150, 50);
+            AjouterBoutonRond(F,"Jouer", "JOUER", 273, 0, 50);
+            AjouterBoutonRond(F,"Score", "SCORE", 273, 50,50);
+            AjouterBoutonRond(F,"Aide", "AIDE", 273, 100, 50);
+            AjouterBoutonRond(F,"Quitter", "QUITTER", 273, 150, 50);
         FinFenetre(F);
         MontrerFenetre(F);
-        i
-
-        if AttendreBouton(F) = "Score" then
-            CacherFenetre(F);
-            Score(F);
-        elsif Bouton(F) = "Jouer" then
-            CacherFenetre(F);
-            Nom(F, NomJoueur);
-
-        elsif AttendreBouton(F) = "Aide" then
-            CacherFenetre(F);
-            Aide(F);
-        elsif AttendreBouton(F) = "Quitter" then 
-            CacherFenetre(F);                                               
-        end if;
+        
+        declare 
+            ClickedButton : string := AttendreBouton(F);
+        begin
+            if ClickedButton = "Score" then
+                CacherFenetre(F);
+                Score(F);
+            elsif ClickedButton = "Jouer" then
+                CacherFenetre(F);
+                Nom(F, NomJoueur);
+            elsif ClickedButton = "Aide" then 
+                CacherFenetre(F);
+                Aide(F);
+            else
+                CacherFenetre(F);   
+            end if;
+        end;
     end Main;                   
 
     procedure Jouer (F : in out TR_Fenetre) is
     --{F, Nom, X, Y: Longueur, Largeur de la fenetre} => { ouvre une fenetre de jeu }
-
     begin
         F := DebutFenetre("Jouer", Fenetre_Size.X, Fenetre_Size.Y);
             AjouterBouton(F,"Abandonner","ABANDONNER", Fenetre_Size.X/2-50, Button_Size.Y*1, Button_Size.X, Button_Size.Y); -- Abandonner une partie
@@ -42,16 +43,19 @@ package body p_vue_graph is
             AjouterBouton(F,"ChangerNom","CHANGER NOM", Fenetre_Size.X/2-50, Button_Size.Y*3, Button_Size.X, Button_Size.Y); -- Changer de nom
         FinFenetre(F);
         MontrerFenetre(F);
-            
-        if AttendreBouton(F) = "Abandonner" then
-            CacherFenetre(F);
-        elsif AttendreBouton(F) = "Restart" then
-            CacherFenetre(F);
-        elsif AttendreBouton(F)= "ChangerNom" then 
-            CacherFenetre(F);
-        else
-            CacherFenetre(F);
-        end if;
+         declare 
+            ClickedButton : string := AttendreBouton(F);
+        begin
+            if ClickedButton = "Abandonner" then
+               CacherFenetre(F);
+            elsif ClickedButton = "Restart" then
+                CacherFenetre(F);
+            elsif ClickedButton = "ChangerNom" then 
+                CacherFenetre(F);
+            else
+                CacherFenetre(F);   
+            end if;     
+        end;
     end Jouer;
 
     procedure Aide(F: in out TR_Fenetre) is 
@@ -72,18 +76,23 @@ package body p_vue_graph is
         FinFenetre(F);
         MontrerFenetre(F);
 
-        if AttendreBouton(F) = "Retour" then
-            Main(F);
-            CacherFenetre(F);
-        end if;
-        CacherFenetre(F);
+        declare
+            ClickedButton : string := AttendreBouton(F);
+        begin
+            if ClickedButton = "Retour" then
+                Main(F);
+                CacherFenetre(F);
+            else 
+                CacherFenetre(F);
+            end if;
+        end;
     end Aide;
 
     procedure Score (F : in out TR_Fenetre) is 
     --{} => {ouvre une fenetre avec les scores des utilisateurs }
     begin
         F := DebutFenetre("Score", Fenetre_Size.X, Fenetre_Size.Y);
-        --ConsulterTimer(F, "Minuteur");
+            --ConsulterTimer(F, "Minuteur");
         FinFenetre(F);
         MontrerFenetre(F);
     end Score;
@@ -100,14 +109,18 @@ package body p_vue_graph is
         FinFenetre(F);
         MontrerFenetre(F);
 
-        if AttendreBouton(F) = "Valider" then
-            NomJoueur := ConsulterContenu(F, "Nom");
-            CacherFenetre(F);
-            Difficulte(F, DifficulteJoueur);
-        else
-            CacherFenetre(F);
-            Main(F);
-        end if;
+        declare 
+            ClickedButton : string := AttendreBouton(F);
+        begin
+            if ClickedButton = "Valider" then
+                NomJoueur := ConsulterContenu(F, "Nom");
+                CacherFenetre(F);
+                Difficulte(F, DifficulteJoueur);
+            else
+                CacherFenetre(F);
+                Main(F); 
+            end if;     
+        end;
     end Nom;
 
     procedure Difficulte(F: in out TR_Fenetre; DifficulteJoueur: out TR_Difficulte)  is
@@ -119,13 +132,18 @@ package body p_vue_graph is
             AjouterBouton(F, "Difficile", "DIFFICILE",140,90,55,30);
         FinFenetre(F);
         MontrerFenetre(F);
-        if AttendreBouton(F) = "Moyen" then
-            DifficulteJoueur := D(Moyen);
-        elsif AttendreBouton(F) = "Difficile" then
-            DifficulteJoueur := D(Difficile);
-        else 
-            DifficulteJoueur := D(Facile);
-        end if;
+
+        declare 
+            ClickedButton : string := AttendreBouton(F);
+        begin
+            if ClickedButton = "Moyen" then
+                DifficulteJoueur := D(Moyen);
+            elsif ClickedButton = "Difficile" then
+                DifficulteJoueur := D(Difficile);
+            else 
+                DifficulteJoueur := D(Facile);
+            end if;
+        end;
         CacherFenetre(F);
         Jouer(F);
     end Difficulte;
