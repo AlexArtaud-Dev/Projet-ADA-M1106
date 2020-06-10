@@ -40,14 +40,22 @@ package p_vue_graph is
 
     type TV_Difficulte is array (T_Difficulte range <>) of TR_Difficulte;
 
+    D : TV_Difficulte := ( Facile => (9, 9, 10), Moyen => (16, 16, 40), Difficile => (16, 30, 99) );
+
     --------------------------------------------------------------------------------------
     
     procedure Main (F : in out TR_Fenetre);
-    procedure Score (F : in out TR_Fenetre);
-    procedure Aide (F : in out TR_Fenetre);
-	function InitNom return string;
 
-    procedure Jouer (F : in out TR_Fenetre);
+    procedure Score (F : in out TR_Fenetre);
+
+    procedure Aide (F : in out TR_Fenetre);
+
+    procedure Nom(F: in out TR_Fenetre; NomJoueur: out string);
+
+    procedure Difficulte(F: in out TR_Fenetre; DifficulteJoueur: out TR_Difficulte);
+
+    procedure Jouer(F : in out TR_Fenetre);
+
     --procedure GenererGrille(G : in out TV_Grille; NombreBombe : in out Positive);
 
     --------------------------------------------------------------------------------------

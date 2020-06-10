@@ -5,13 +5,10 @@ with p_vue_graph; use p_vue_graph;
 
 procedure demineur_graph is
 	F : TR_Fenetre;
-	Nom : string(1..10) := (others => ' ');
 begin 
 	InitialiserFenetres;
 
 	Main(F);
-
-    Nom := InitNom;
 
 	--Jouer(F, "Denimeur", 500, 250);
 
