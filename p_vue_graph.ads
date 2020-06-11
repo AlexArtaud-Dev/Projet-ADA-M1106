@@ -69,9 +69,6 @@ package p_vue_graph is
 
     --------------------------------------------------------------------------------------
 
-    --procedure GetScores();
-
-
     --------------------------------------------------------------------------------------
 
     procedure SetEtatBoutton(F: in out TR_Fenetre; G: in out TV_Grille; Etat : in T_EtatBouton );
@@ -80,12 +77,16 @@ package p_vue_graph is
     
     function GetPositionString(G : in TV_Grille; PosX, PosY : in integer) return string;
        
-    procedure RafraichirGrille(F : in out TR_Fenetre; G : in out TV_Grille; Triche : in boolean);
+    --------------------------------------------------------------------------------------
 
+    procedure GetScoresByName(Scores, UserScores : in out TV_Score; Nom : in string) ;
 
+    procedure GetScores(f : in p_pays_io.file_type; Scores : out TV_Score);
 
- 
+    procedure SetScore(f : in p_pays_io.file_type; Score : in out TR_Score);
+
+    procedure FScore(Victoire : in Boolean; Temps : in out Time; Nom : in out String);
 
     --------------------------------------------------------------------------------------
-      
+
 end p_vue_graph;
