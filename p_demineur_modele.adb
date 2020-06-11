@@ -120,20 +120,26 @@ package body p_demineur_modele is
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
-
+    
 
 	procedure InitialiseGrille (G : out TV_Grille ; NbMines : in natural) is
         --{NbMines < G'length(1)*G'length(2)} => {NbMines ont été placées au hasard dans G ; toutes les cases sont couvertes}
 	 
-        subtype CaseR is  positive range 1..(G'length(1)*G'length(2)); -- Défini un subtype CaseR positif entre 1 et le nombre de case max
-        package randomizer is new Ada.Numerics.Discrete_Random(CaseR); use randomizer; --Implémentation du randomizer sur CaseR
+        subtype CaseRX is  positive range 1..G'length(1); -- Défini un subtype CaseR positif entre 1 et le nombre de case max
+        package randomizerX is new Ada.Numerics.Discrete_Random(CaseRX); use randomizerX; --Implémentation du randomizer sur CaseR
 
-		gen : Generator;
-		CaseC : CaseR; 
+        subtype CaseRY is  positive range 1..G'length(2); -- Défini un subtype CaseR positif entre 1 et le nombre de case max
+        package randomizerY is new Ada.Numerics.Discrete_Random(CaseRY); use randomizerY; --Implémentation du randomizer sur CaseR
+
+		genX : randomizerX.Generator;
+        genY : randomizerY.Generator;
+		CaseX : CaseRX; 
+		CaseY : CaseRY; 
 		x, y : Positive;
         counter : integer := 0;
 	begin
-		Reset(gen);
+		Reset(genX);
+        Reset(genY);
 		for ligne in G'range(1) loop -- range(1) = première dim
 			for colonne in G'range(2) loop -- range(2) = deuxieme dim
 				G(ligne, colonne).Etat := couverte;
@@ -142,11 +148,10 @@ package body p_demineur_modele is
 		end loop;
 		
 		while counter < NbMines loop
-			CaseC :=  random(gen); -- Générateur de nombre aléatoire dans le domaine défini au préalable
-
-			x := integer((CaseC - 1)/G'length(1)) + 1;
-			y := G'length(1) - ((G'length(1)*G'length(2) - CaseC) mod G'length(1));
-
+			CaseX := random(genX); -- Générateur de nombre aléatoire dans le domaine défini au préalable
+            CaseY := random(genY);
+			x := CaseX;
+			y := CaseY;
             if x <= G'Length(1) and y <= G'Length(2) then
                 if not G(x, y).Occupee then -- Cela permet de remplir les cases innocupées et les occuper.
 				    G(x, y).Occupee := true;
