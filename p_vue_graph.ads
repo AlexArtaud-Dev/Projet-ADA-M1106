@@ -56,11 +56,24 @@ package p_vue_graph is
 
     procedure F_Jouer(F : in out TR_Fenetre; G : in out TV_Grille; Case_Size : in TR_Case_Size);
 
+    --------------------------------------------------------------------------------------
+
+    --procedure GetScores();
+
+
+    --------------------------------------------------------------------------------------
+
+    procedure SetEtatBoutton(F: in out TR_Fenetre; G: in out TV_Grille; Etat : in T_EtatBouton );
+    
+    procedure GetPosition(NumCase : in string; Colonne, Ligne : in integer; PosX, PosY: out integer);
+    
+    function GetPositionString(G : in out TV_Grille; PosX, PosY : in integer) return string;
+       
     procedure RafraichirGrille(F : in out TR_Fenetre; G : in out TV_Grille; Triche : in boolean);
 
-    procedure GetPosition(NumCase : in string; Colonne, Ligne : in integer ;PosX, PosY: out integer);
 
-    function GetPositionString(G : in out TV_Grille; PosX, PosY : in integer) return string;
+
+ 
 
     --------------------------------------------------------------------------------------
       

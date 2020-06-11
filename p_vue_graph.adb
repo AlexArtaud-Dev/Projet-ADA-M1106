@@ -22,7 +22,6 @@ package body p_vue_graph is
             AjouterImage(F, "demineurimg","demineur.xpm", "  ", 68, 20 ,700,150 );
             ChangerCouleurFond(F, "fond", FL_WHITE);
         FinFenetre(F);
-       
     end F_Main;                       
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
@@ -38,8 +37,10 @@ package body p_vue_graph is
             ChangerStyleTexte(F,"Abandonner",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Restart",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"ChangerNom",FL_BOLD_STYLE);
-            AjouterChrono(F, "Chronometre", "Votre temps", Fenetre_Size.X-((Fenetre_Size.X/100)*17), ((Fenetre_Size.Y/100)*15), ((Fenetre_Size.X/100)*16), ((Fenetre_Size.Y/100)*5));								
-                                                                                                    
+            AjouterChrono(F, "Chronometre", "Votre temps", Fenetre_Size.X-((Fenetre_Size.X/100)*17), ((Fenetre_Size.Y/100)*15), ((Fenetre_Size.X/100)*16), ((Fenetre_Size.Y/100)*5));						
+        
+        ecrire_ligne(G'Length(1));
+        ecrire_ligne(G'Length(2));
         for ligne in G'Range(1) loop
             for colonne in G'Range(2) loop
                 PositionString := GetPositionString(G, ligne, colonne); 
@@ -104,7 +105,7 @@ package body p_vue_graph is
             AjouterBouton(F,"Facile", "FACILE", 270, Button_Size.Y*1+160, Button_Size.X, Button_Size.Y);
             AjouterBouton(F,"Moyen", "MOYEN", 270, Button_Size.Y*2+170, Button_Size.X, Button_Size.Y);
             AjouterBouton(F,"Difficile", "DIFFICILE", 270, Button_Size.Y*3+180, Button_Size.X, Button_Size.Y);
-            AjouterBoutonImage(F,"Retour","","retourbouton.xpm", 20, 500, 150, 50);
+            AjouterBoutonImage(F,"Retour", "", "retourbouton.xpm", 20, 500, 150, 50);
         FinFenetre(F);
     end F_Difficulte; 
     ------------------------------------------------------------------------------------------------------
@@ -142,6 +143,8 @@ package body p_vue_graph is
                             end case;
                             ChangerCouleurTexte(F, PositionString,  Texte_Couleur);
                             ChangerTexte(F, PositionString, Integer'Image(Arround)); --Affiche les chiffres
+                            ChangerStyleTexte(F, PositionString, FL_BOLD_STYLE);
+                            ChangerTailleContenu(F, PositionString, FL_HUGE_SIZE);
                         else
                             ChangerCouleurFond(F, PositionString, FL_BOTTOM_BCOL);
                         end if;
@@ -155,8 +158,24 @@ package body p_vue_graph is
             end loop;
         end loop;
     end RafraichirGrille;
+    ------------------------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------------------
+    procedure SetEtatBoutton(F: in out TR_Fenetre; G: in out TV_Grille; Etat : in T_EtatBouton ) is
+        PositionString : string(1..4);
+    begin 
+        for ligne in G'Range(1) loop
+            for colonne in G'Range(2) loop
+                PositionString := GetPositionString(G, ligne, colonne);
 
+                ChangerTexte(F, PositionString, "");
+                ChangerCouleurTexte(F, PositionString, FL_COL1);
+                ChangerCouleurFond(F, PositionString, FL_COL1);
 
+                ChangerEtatBouton(F, PositionString, Etat);
+            end loop;
+        end loop;
+    end SetEtatBoutton;
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
@@ -192,6 +211,9 @@ package body p_vue_graph is
         end if;
         return PositionString;
     end GetPositionString;
+    ------------------------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------

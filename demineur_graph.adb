@@ -46,29 +46,30 @@ begin
 						elsif Click = "Difficile" then
 							Difficulte := D(Difficile);
 						end if;
-						declare
-							G : TV_Grille(1..Difficulte.Colonne, 1..Difficulte.Ligne);
-							Debut, Fin : Time;
-						begin
-							InitialiseGrille(G, Difficulte.NombreBombe);
-							CacherFenetre(F);
-							F_Jouer(F, G, Difficulte.CaseSize);
-							MontrerFenetre(F);
-
+					declare
+						G : TV_Grille(1..Difficulte.Colonne, 1..Difficulte.Ligne);
+						--Debut, Fin : Time;
+					begin
+						InitialiseGrille(G, Difficulte.NombreBombe);
+						CacherFenetre(F);
+						F_Jouer(F, G, Difficulte.CaseSize);
+						MontrerFenetre(F);
+				
 							--Debut := Clock;
 							loop -- Attendre un click
 								declare 
 									Click : string := AttendreBouton(F);
 									PosX, PosY : integer;
 									Defaite : boolean := false;
-								begin 
+								begin 	
+									ecrire_ligne(Click);
 									if Click = "Abandonner" then
-										ecrire_ligne(Click);
+										Defaite := true;
 									elsif Click = "Restart" then
-										ecrire_ligne(Click);
+										Restart(G);
+										SetEtatBoutton(F, G, marche);
 									else
 										GetPosition(Click, Difficulte.Colonne, Difficulte.Ligne, PosX, PosY);
-
 										if ClickDroit then 
 											MarqueCase(G, PosX, PosY);
 										else
@@ -81,14 +82,12 @@ begin
 											ecrire("NombreMineAutour: "); ecrire_ligne(NombreMineAutour( G, PosX, PosY));
 
 											Defaite := DefaiteJoueur(G, PosX, PosY);
-									
 										end if;
-										if Defaite then
-											RafraichirGrille(F, G, true);
-										else
-											RafraichirGrille(F, G, false);
-										end if;
-										
+									end if;
+									if Defaite then
+										RafraichirGrille(F, G, true);
+									else
+										RafraichirGrille(F, G, false);	
 									end if;
 								end;
 								--exit when Defaite or Abandonner;
@@ -111,7 +110,6 @@ begin
 						MontrerFenetre(F);
 					end if;
 				end;
-
 			elsif Click = "Aide" then
 				CacherFenetre(F);
 				F_Aide(F);

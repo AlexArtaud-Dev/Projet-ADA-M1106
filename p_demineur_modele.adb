@@ -100,7 +100,7 @@ package body p_demineur_modele is
 
 	function VictoireJoueur (G : in TV_Grille ) return Boolean is
 	--{} => {résultat = vrai si toutes les cases libres de la grille G sont dévoilées}
-	victoire : boolean := true;
+	    victoire : boolean := true;
 	begin
 		for ligne in G'first(1)..G'last(1) loop
 			for colonne in G'first(2)..G'last(2) loop
@@ -159,6 +159,18 @@ package body p_demineur_modele is
 	end InitialiseGrille;
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
-
+    procedure Restart (G : in out TV_Grille) is
+    --{} => {Remet la grille à Zéro}
+        C : TR_Case;
+    begin
+        for ligne in G'Range(1) loop
+            for colonne in G'Range(2) loop
+                C := G(ligne, colonne);
+                C.Etat := Couverte;
+                G(ligne, colonne) := C;
+            end loop;
+        end loop;
+    end Restart;
+---------------------------------------------------------------------------------------------------------------------------------------------
 
 end p_demineur_modele;

@@ -36,4 +36,6 @@ package p_demineur_modele is
     return Boolean;
 	--{} => {résultat = vrai si toutes les cases libres de la grille G sont dévoilées}
   
+
+	procedure Restart (G : in out TV_Grille);
 end p_demineur_modele;
