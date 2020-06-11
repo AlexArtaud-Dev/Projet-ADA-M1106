@@ -46,14 +46,17 @@ begin
 						elsif Click = "Difficile" then
 							Difficulte := D(Difficile);
 						end if;
-					declare
-						G : TV_Grille(1..Difficulte.Colonne, 1..Difficulte.Ligne);
-						--Debut, Fin : Time;
-					begin
-						InitialiseGrille(G, Difficulte.NombreBombe);
-						CacherFenetre(F);
-						F_Jouer(F, G, Difficulte.CaseSize);
-						MontrerFenetre(F);
+						declare
+							G : TV_Grille(1..Difficulte.Colonne, 1..Difficulte.Ligne);
+							--Debut, Fin : Time;
+						begin
+							ecrire_ligne(G'Length(1));
+							ecrire_ligne(G'Length(2));
+							InitialiseGrille(G, Difficulte.NombreBombe);
+
+							CacherFenetre(F);
+							F_Jouer(F, G, Difficulte.CaseSize);
+							MontrerFenetre(F);
 				
 							--Debut := Clock;
 							loop -- Attendre un click

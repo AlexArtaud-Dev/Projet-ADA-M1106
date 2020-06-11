@@ -67,7 +67,7 @@ package p_vue_graph is
     
     procedure GetPosition(NumCase : in string; Colonne, Ligne : in integer; PosX, PosY: out integer);
     
-    function GetPositionString(G : in out TV_Grille; PosX, PosY : in integer) return string;
+    function GetPositionString(G : in TV_Grille; PosX, PosY : in integer) return string;
        
     procedure RafraichirGrille(F : in out TR_Fenetre; G : in out TV_Grille; Triche : in boolean);
 

@@ -21,14 +21,14 @@ package body p_vue_graph is
             AjouterImage(F, "tnt2img","tnt3.xpm", "  ", 580, 300 ,200,200 );
             AjouterImage(F, "demineurimg","demineur.xpm", "  ", 68, 20 ,700,150 );
             ChangerCouleurFond(F, "fond", FL_WHITE);
-        FinFenetre(F);
+        FinFenetre(F);  
     end F_Main;                       
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     procedure F_Jouer (F : in out TR_Fenetre; G : in out TV_Grille; Case_Size : in TR_Case_Size) is
     --{F, Nom, X, Y: Longueur, Largeur de la fenetre} => { ouvre une fenetre de jeu }
-    countX, countY : integer := 0;
+    countX, countY, test : integer := 0;
     PositionString : String(1..4);
     begin
         F := DebutFenetre("Jouer", Fenetre_Size.X, Fenetre_Size.Y);
@@ -37,7 +37,7 @@ package body p_vue_graph is
             ChangerStyleTexte(F,"Abandonner",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Restart",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"ChangerNom",FL_BOLD_STYLE);
-            AjouterChrono(F, "Chronometre", "Votre temps", Fenetre_Size.X-((Fenetre_Size.X/100)*17), ((Fenetre_Size.Y/100)*15), ((Fenetre_Size.X/100)*16), ((Fenetre_Size.Y/100)*5));						
+           -- AjouterChrono(F, "Chronometre", "Votre temps", Fenetre_Size.X-((Fenetre_Size.X/100)*17), ((Fenetre_Size.Y/100)*15), ((Fenetre_Size.X/100)*16), ((Fenetre_Size.Y/100)*5));						
         
         ecrire_ligne(G'Length(1));
         ecrire_ligne(G'Length(2));
@@ -112,6 +112,7 @@ package body p_vue_graph is
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     procedure RafraichirGrille(F : in out TR_Fenetre; G : in out TV_Grille; Triche : in boolean ) is
+    --{} => {}
         C : TR_Case;
         Arround : integer;
         Texte_Couleur : T_Couleur;
@@ -162,6 +163,7 @@ package body p_vue_graph is
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     procedure SetEtatBoutton(F: in out TR_Fenetre; G: in out TV_Grille; Etat : in T_EtatBouton ) is
+     --{} => {}
         PositionString : string(1..4);
     begin 
         for ligne in G'Range(1) loop
@@ -190,6 +192,7 @@ package body p_vue_graph is
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     procedure GetPosition(NumCase : in string; Colonne, Ligne : in integer ; PosX, PosY: out integer) is
+    --{} => {}
     begin  
         PosX := Integer'Value(NumCase(1..2));
         PosY := Integer'Value(NumCase(3..4));
@@ -197,18 +200,32 @@ package body p_vue_graph is
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
-    function GetPositionString(G : in out TV_Grille; PosX, PosY : in integer) return string is
+  --for i in 1..S.nb_caseY loop 
+       --   for j in 1..S.nb_caseX loop
+           --   if i < 10 and j< 10 then
+             --     nom := "0" & Integer'Image(I)(2..2) & "0" & Integer'Image(J)(2..2);
+             --     elsif i < 10 then
+             --     nom := "0" & Integer'Image(I)(2..2) & Image(J)(2..3);
+             --     elsif j < 10 then
+              --    nom := Integer'Image(I)(2..3) & "0" & Integer'Image(J)(2..2);
+              --    else
+             --         nom := Integer'Image(I)(2..3) & Integer'Image(J)(2..3);
+           --   end if;
+    
+    function GetPositionString(G : in TV_Grille; PosX, PosY : in integer) return string is
+    --{} => {}
         PositionString : string(1..4);
     begin
-        if PosX < G'Length(1)+1 and PosY< G'Length(2)+1 then
+        if PosX < 10 and PosY < 10 then
             PositionString := "0" & Integer'Image(PosX)(2..2) & "0" & Integer'Image(PosY)(2..2);
-        elsif PosX < G'Length(1)+1 then
-            PositionString := "0" & Integer'Image(PosX)(2..2) & Image(PosY)(2..3);
-        elsif PosY < G'Length(2)+1 then
+        elsif PosX < 10 then
+            PositionString := "0" & Integer'Image(PosX)(2..2) & Integer'Image(PosY)(2..3);
+        elsif PosY < 10 then
             PositionString := Integer'Image(PosX)(2..3) & "0" & Integer'Image(PosY)(2..2);
         else
             PositionString := Integer'Image(PosX)(2..3) & Integer'Image(PosY)(2..3);
         end if;
+        --ecrire_ligne(PositionString);
         return PositionString;
     end GetPositionString;
     ------------------------------------------------------------------------------------------------------
