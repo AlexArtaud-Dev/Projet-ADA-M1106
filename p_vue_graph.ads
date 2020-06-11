@@ -25,7 +25,6 @@ package p_vue_graph is
     end record;
 
     Fenetre_Size : TR_Fenetre_Size := (820, 580);--résolution fenetre
-    Case_Size : TR_Case_Size := (20, 20);
     Button_Size : TR_Button_Size := (280, 70);--Largeur,Hauteur des boutons
 
     --------------------------------------------------------------------------------------
@@ -34,13 +33,14 @@ package p_vue_graph is
         Colonne : Positive;
         Ligne : Positive;
         NombreBombe : Positive;
+        CaseSize : TR_Case_Size;
     end record;
 
     type T_Difficulte is (Facile, Moyen, Difficile);
 
     type TV_Difficulte is array (T_Difficulte range <>) of TR_Difficulte;
 
-    D : TV_Difficulte := ( Facile => (9, 9, 10), Moyen => (16, 16, 40), Difficile => (16, 30, 99) );
+    D : TV_Difficulte := ( Facile => (9, 9, 10, (50, 50)), Moyen => (16, 16, 40, (32, 32)), Difficile => (16, 30, 99, (20, 20)));
 
     --------------------------------------------------------------------------------------
     
@@ -54,10 +54,12 @@ package p_vue_graph is
 
     procedure F_Difficulte(F: in out TR_Fenetre);
 
-    procedure F_Jouer(F : in out TR_Fenetre);
+    procedure F_Jouer(F : in out TR_Fenetre; G : in out TV_Grille; Case_Size : in TR_Case_Size);
 
-    --procedure GenererGrille(G : in out TV_Grille; NombreBombe : in out Positive);
+    procedure RafraichirGrille(F : in out TR_Fenetre; G : in out TV_Grille; Triche : in boolean);
+
+    procedure GetPosition(NumCase : in string; Colonne, Ligne : in integer ;PosX, PosY: out integer);
 
     --------------------------------------------------------------------------------------
-        
+      
 end p_vue_graph;

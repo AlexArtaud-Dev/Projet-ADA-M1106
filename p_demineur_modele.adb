@@ -154,7 +154,7 @@ package body p_demineur_modele is
 			    end if;
             end if;
 
-            ecrire("counter: "); ecrire_ligne(counter);
+            --ecrire("counter: "); ecrire_ligne(counter);
 		end loop;
 	end InitialiseGrille;
 
