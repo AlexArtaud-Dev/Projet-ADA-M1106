@@ -37,7 +37,7 @@ package body p_vue_graph is
             ChangerStyleTexte(F,"Abandonner",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Restart",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"ChangerNom",FL_BOLD_STYLE);
-           -- AjouterChrono(F, "Chronometre", "Votre temps", Fenetre_Size.X-((Fenetre_Size.X/100)*17), ((Fenetre_Size.Y/100)*15), ((Fenetre_Size.X/100)*16), ((Fenetre_Size.Y/100)*5));						
+            AjouterChrono(F, "Chronometre", "Votre temps", Fenetre_Size.X-((Fenetre_Size.X/100)*17), ((Fenetre_Size.Y/100)*15), ((Fenetre_Size.X/100)*16), ((Fenetre_Size.Y/100)*5));						
         
         ecrire_ligne(G'Length(1));
         ecrire_ligne(G'Length(2));

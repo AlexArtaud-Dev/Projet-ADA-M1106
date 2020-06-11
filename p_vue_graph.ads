@@ -7,6 +7,17 @@ package p_vue_graph is
 
     --------------------------------------------------------------------------------------
 
+    type TR_Score is record
+        Nom : string(1..20) := (others => ' ');
+        Score : float;
+    end record;
+        
+	package p_scores_io is new sequential_io(TR_Score); use p_scores_io;
+
+    type TV_Score is array (integer range <>) of TR_Score;
+
+    --------------------------------------------------------------------------------------
+
     type T_Fenetre is (Main, Aide, Score, Jeu);
 
     type TR_Fenetre_Size is record

@@ -4,7 +4,7 @@ package p_demineur_modele is
 	type TR_Case is record
 		Occupee : Boolean;
 		Etat    : T_Etat;
-	end record; 
+	end record;
       
 	type TV_Grille is array (positive range <>, positive range <>) of TR_Case;
 
