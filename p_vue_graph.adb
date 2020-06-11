@@ -20,7 +20,7 @@ package body p_vue_graph is
             AjouterImage(F, "tnt1img","tnt2.xpm", "  ", 40, 300 ,200,200 );
             AjouterImage(F, "tnt2img","tnt3.xpm", "  ", 580, 300 ,200,200 );
             AjouterImage(F, "demineurimg","demineur.xpm", "  ", 68, 20 ,700,150 );
-            ChangerCouleurFond(F, "fond", FL_WHITE);
+            ChangerCouleurFond(F, "fond", FL_TOP_BCOL);
         FinFenetre(F);  
     end F_Main;                       
     ------------------------------------------------------------------------------------------------------
@@ -39,11 +39,12 @@ package body p_vue_graph is
             ChangerStyleTexte(F,"Abandonner",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Restart",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"ChangerNom",FL_BOLD_STYLE);
+            ChangerCouleurFond(F, "fond", FL_TOP_BCOL);
 
-            AjouterMinuteur(F,"Clock","",150,350,100,70);   
-            ChangerStyleTexte(F,"Clock", FL_BOLD_Style);   
-            ChangerTailleTexte(F,"Clock", FL_medium_size);   
-            ChangerCouleurFond(F,"Clock",FL_WHITE);   
+           -- AjouterMinuteur(F,"Clock","",150,350,100,70);   
+           -- ChangerStyleTexte(F,"Clock", FL_BOLD_Style);   
+           -- ChangerTailleTexte(F,"Clock", FL_medium_size);   
+           -- ChangerCouleurFond(F,"Clock",FL_WHITE);   
 
 
         for ligne in G'Range(1) loop
@@ -70,6 +71,7 @@ package body p_vue_graph is
             AjouterImage(F, "aideimg","aide.xpm", "  ", 70, 20 ,700,150 );
             AjouterImage(F, "reglesimg","regles.xpm", "  ",12, 170 ,900,200 );
             AjouterImage(F, "controleimg","controle.xpm", "  ",12, 335 ,900,200 );
+            ChangerCouleurFond(F, "fond", FL_TOP_BCOL);
         FinFenetre(F);
     end F_Aide;
     ------------------------------------------------------------------------------------------------------
@@ -82,6 +84,7 @@ package body p_vue_graph is
         AjouterImage(F, "Scoreimg","score.xpm", "  ", 70, 20 ,700,150 );
         AjouterImage(F, "case1","Case1.xpm", "  ", 70, 20 ,50,50 );
         AjouterBoutonImage(F,"Retour","","retourbouton.xpm", 20, 500, 150, 50);
+        ChangerCouleurFond(F, "fond", FL_TOP_BCOL);
             --ConsulterTimer(F, "Minuteur");
         FinFenetre(F);
     end F_Score;  
@@ -95,10 +98,12 @@ package body p_vue_graph is
             AjouterImage(F, "Joueurimg","joueur.xpm", "  ", 70, 20 ,700,150 );
             AjouterImage(F, "pseudoimg","pseudo.xpm", "  ", 50, 160 ,700,150 );        
             AjouterBouton(F,"Valider","VALIDER",285,310,228,30);
-            AjouterChamp(F,"Nom","Entrer Nom","",285,270,230,30);
+            AjouterChamp(F,"Nom","","",285,270,230,30);
             ChangerStyleTexte(F,"Annuler",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Valider",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Nom",FL_ITALIC_STYLE);
+            ChangerCouleurFond(F, "fond", FL_TOP_BCOL);
+
         FinFenetre(F);
     end F_Nom;
     ------------------------------------------------------------------------------------------------------
@@ -112,7 +117,8 @@ package body p_vue_graph is
             AjouterBouton(F,"Facile", "FACILE", 270, Button_Size.Y*1+160, Button_Size.X, Button_Size.Y);
             AjouterBouton(F,"Moyen", "MOYEN", 270, Button_Size.Y*2+170, Button_Size.X, Button_Size.Y);
             AjouterBouton(F,"Difficile", "DIFFICILE", 270, Button_Size.Y*3+180, Button_Size.X, Button_Size.Y);
-            AjouterBoutonImage(F,"Retour", "", "retourbouton.xpm", 20, 500, 150, 50);
+            ChangerCouleurFond(F, "fond", FL_TOP_BCOL);
+
         FinFenetre(F);
     end F_Difficulte; 
     ------------------------------------------------------------------------------------------------------
