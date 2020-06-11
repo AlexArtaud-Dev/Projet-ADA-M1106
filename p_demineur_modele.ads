@@ -1,18 +1,14 @@
 package p_demineur_modele is
 
-	-- case de la grille
-	type T_Etat is (couverte, decouverte, marquee); -- état d'une case
+	type T_Etat is (couverte, decouverte, marquee);
 	type TR_Case is record
-		Occupee : Boolean; -- vrai si la case contient une mine, faux sinon
+		Occupee : Boolean;
 		Etat    : T_Etat;
 	end record; 
       
-	-- grille de démineur
 	type TV_Grille is array (positive range <>, positive range <>) of TR_Case;
 
-	-- Array loop 
 	Type TV_Around is array(1..2) of integer;
-
 
 	procedure InitialiseGrille (G : out TV_Grille ; NbMines : in natural);
 	--{NbMines < G'length(1)*G'length(2)} => {NbMines ont été placées au hasard dans G ; toutes les cases sont couvertes}

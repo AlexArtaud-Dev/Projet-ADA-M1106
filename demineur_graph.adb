@@ -35,7 +35,6 @@ begin
 					CacherFenetre(F);
 					F_Difficulte(F);
 					MontrerFenetre(F);
-
 					declare
 						Click : string := AttendreBouton(F);
 						Difficulte : TR_Difficulte;
@@ -49,11 +48,14 @@ begin
 						end if;
 						declare
 							G : TV_Grille(1..Difficulte.Colonne, 1..Difficulte.Ligne);
+							Debut, Fin : Time;
 						begin
 							InitialiseGrille(G, Difficulte.NombreBombe);
 							CacherFenetre(F);
 							F_Jouer(F, G, Difficulte.CaseSize);
 							MontrerFenetre(F);
+
+							--Debut := Clock;
 							loop -- Attendre un click
 								declare 
 									Click : string := AttendreBouton(F);
@@ -65,27 +67,34 @@ begin
 									elsif Click = "Restart" then
 										ecrire_ligne(Click);
 									else
-
 										GetPosition(Click, Difficulte.Colonne, Difficulte.Ligne, PosX, PosY);
-										DevoileCase(G, PosX, PosY);
-										-- Integer'Image(NombreMineAutour(G, ligne, colone))
 
-										ecrire("NumCase: "); ecrire_ligne(Click);
-										ecrire("PosX "); ecrire_ligne(PosX);
-										ecrire("PosY: "); ecrire_ligne(PosY);
-										ecrire("NombreMineAutour: "); ecrire_ligne(NombreMineAutour( G, PosX, PosY));
-
-										Defaite := DefaiteJoueur(G, PosX, PosY);
+										if ClickDroit then 
+											MarqueCase(G, PosX, PosY);
+										else
 										
-										if Defaite then 
+											DevoileCase(G, PosX, PosY);
+
+											ecrire("NumCase: "); ecrire_ligne(Click);
+											ecrire("PosX "); ecrire_ligne(PosX);
+											ecrire("PosY: "); ecrire_ligne(PosY);
+											ecrire("NombreMineAutour: "); ecrire_ligne(NombreMineAutour( G, PosX, PosY));
+
+											Defaite := DefaiteJoueur(G, PosX, PosY);
+									
+										end if;
+										if Defaite then
 											RafraichirGrille(F, G, true);
-										else 
+										else
 											RafraichirGrille(F, G, false);
 										end if;
+										
 									end if;
 								end;
-								--exit when Defaite;
+								--exit when Defaite or Abandonner;
 							end loop;
+							--Fin := Clock;
+							--ecrire_ligne(Fin);
 						end;
 					end;
 				end;
@@ -117,13 +126,9 @@ begin
 					end if;
 				end;
 			elsif Click = "Quitter" then
-				--exit;
-				CacherFenetre(F);
-				F_Main(F);
-				MontrerFenetre(F);
+				exit;
 			end if;
 		end;
-		
 		CacherFenetre(F);
 	end loop;
 
