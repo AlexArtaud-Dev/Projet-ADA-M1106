@@ -3,15 +3,15 @@ with Forms; use Forms;
 with p_esiut; use p_esiut;
 with p_vue_graph; use p_vue_graph;
 
+
 procedure demineur_graph is
 	F : TR_Fenetre;
 begin
 	InitialiserFenetres;
 
-    F_Main(F);
-    MontrerFenetre(F);
-
 	loop
+	    F_Main(F);
+		MontrerFenetre(F);
 		declare
 			Click : string := AttendreBouton(F);
 		begin
@@ -21,39 +21,40 @@ begin
 				MontrerFenetre(F);
 				declare
 					Click : string := AttendreBouton(F);
+					NomJoueur : string(1..20) := (others => ' ');
+					Chars : integer := 0;
 				begin
-					if Click = "Valider" then
-						declare 
-							NomJoueur : string := ConsulterContenu(F, "Nom");
-						begin
-							if (NomJoueur = "") then NomJoueur := "Invité"; end if;
-							CacherFenetre(F);
-							F_Difficulte(F);
-							MontrerFenetre(F);
-							declare
-								Click : string := AttendreBouton(F);
-								Difficulte : TR_Difficulte;
-							begin
-								if Click = "Facile" then
-									Difficulte := D(Facile);
-								elsif Click = "Moyen" then 
-									Difficulte := D(Moyen);
-								elsif Click = "Difficile" then
-									Difficulte := D(Difficile);
-								end if;
-								-- Genere TR_Grille
-								CacherFenetre(F);
-								F_Jouer(F);
-								MontrerFenetre(F);
-							end;
-						end;
-					elsif Click = "Annuler" then
-						CacherFenetre(F);
-						F_Main(F);
-						MontrerFenetre(F);
+					Chars := ConsulterContenu(F, "Nom")'Length;
+					if Chars = 0 then 
+						NomJoueur(1..6) := "Invite";
+					else
+						NomJoueur(1..Chars) := ConsulterContenu(F, "Nom");
 					end if;
-				end;
+					ecrire("Nom Joueur: "); ecrire_ligne(NomJoueur);
+					CacherFenetre(F);
+					F_Difficulte(F);
+					MontrerFenetre(F);
 
+					declare
+						Click : string := AttendreBouton(F);
+						Difficulte : TR_Difficulte;
+					begin
+						if Click = "Facile" then
+							Difficulte := D(Facile);
+						elsif Click = "Moyen" then 
+							Difficulte := D(Moyen);
+						elsif Click = "Difficile" then
+							Difficulte := D(Difficile);
+						end if;
+
+						declare
+							G : TV_Grille(1..Difficulte.Colonne, 1..Difficulte.Ligne);
+						begin
+							InitialiseGrille(G, Difficulte.NombreBombe);
+						end;
+
+					end;
+				end;
 			elsif Click = "Score" then
 				CacherFenetre(F);
 				F_Score(F); 
@@ -81,12 +82,11 @@ begin
 						MontrerFenetre(F);
 					end if;
 				end;
-
 			elsif Click = "Quitter" then
 				exit;
 			end if;
 		end;
-
+		CacherFenetre(F);
 	end loop;
 
 

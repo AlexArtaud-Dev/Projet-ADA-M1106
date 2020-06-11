@@ -12,9 +12,9 @@ package body p_vue_graph is
             AjouterBouton(F,"Score", "SCORE", 273, Button_Size.Y*2+180, Button_Size.X, Button_Size.Y);
             AjouterBouton(F,"Aide", "AIDE", 273, Button_Size.Y*3+190, Button_Size.X, Button_Size.Y);
             AjouterBouton(F,"Quitter", "QUITTER", 273, Button_Size.Y*4+200, Button_Size.X, Button_Size.Y);
-            AjouterImage(F, "tnt1xpm","tnt2.xpm", "  ", 40, 300 ,200,200 );
-            AjouterImage(F, "tnt2xpm","tnt3.xpm", "  ", 580, 300 ,200,200 );
-            AjouterImage(F, "demineur","demineur.xpm", "  ", 68, 20 ,700,150 );
+            AjouterImage(F, "tnt1img","tnt2.xpm", "  ", 40, 300 ,200,200 );
+            AjouterImage(F, "tnt2img","tnt3.xpm", "  ", 580, 300 ,200,200 );
+            AjouterImage(F, "demineurimg","demineur.xpm", "  ", 68, 20 ,700,150 );
             ChangerCouleurFond(F, "fond", FL_RIGHT_BCOL);
         FinFenetre(F);
        
@@ -38,9 +38,9 @@ package body p_vue_graph is
     begin
         F := DebutFenetre("Aide", Fenetre_Size.X, Fenetre_Size.Y);
             AjouterBoutonImage(F,"Retour","","retourbouton.xpm", 20, 500, 150, 50);
-            AjouterImage(F, "aide","aide.xpm", "  ", 70, 20 ,700,150 );
-            AjouterImage(F, "regles","regles.xpm", "  ",12, 170 ,900,200 );
-            AjouterImage(F, "controle","controle.xpm", "  ",12, 335 ,900,200 );
+            AjouterImage(F, "aideimg","aide.xpm", "  ", 70, 20 ,700,150 );
+            AjouterImage(F, "reglesimg","regles.xpm", "  ",12, 170 ,900,200 );
+            AjouterImage(F, "controleimg","controle.xpm", "  ",12, 335 ,900,200 );
         FinFenetre(F);
       
     end F_Aide;
@@ -49,21 +49,21 @@ package body p_vue_graph is
     --{} => {ouvre une fenetre avec les scores des utilisateurs }
     begin
         F := DebutFenetre("Score", Fenetre_Size.X, Fenetre_Size.Y);
+        AjouterImage(F, "Scoreimg","score.xpm", "  ", 70, 20 ,700,150 );
+        
              AjouterBoutonImage(F,"Retour","","retourbouton.xpm", 20, 500, 150, 50);
             --ConsulterTimer(F, "Minuteur");
         FinFenetre(F);
-    end F_Score;
-    
+    end F_Score;  
 
     procedure F_Nom(F: in out TR_Fenetre) is
     --{} => {Ouvre une fenetre pour initialiser le nom de l'utilisateur }
     begin
-        F := DebutFenetre("NomJoueur", Fenetre_Size.X, Fenetre_Size.Y);
-            AjouterImage(F, "Joueur","joueur.xpm", "  ", 70, 20 ,700,150 );
-            AjouterImage(F, "pseudo","pseudo.xpm", "  ", 50, 160 ,700,150 );
-            AjouterBouton(F,"Annuler","ANNULER",285,310,114,30);           
-            AjouterBouton(F,"Valider","VALIDER",400,310,114,30);
-            AjouterChamp(F,"Nom","","Entrer Nom",285,270,230,30);
+        F := DebutFenetre("Nom", Fenetre_Size.X, Fenetre_Size.Y);
+            AjouterImage(F, "Joueurimg","joueur.xpm", "  ", 70, 20 ,700,150 );
+            AjouterImage(F, "pseudoimg","pseudo.xpm", "  ", 50, 160 ,700,150 );        
+            AjouterBouton(F,"Valider","VALIDER",285,310,228,30);
+            AjouterChamp(F,"Nom","Entrer Nom","",285,270,230,30);
             ChangerStyleTexte(F,"Annuler",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Valider",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Nom",FL_ITALIC_STYLE);
@@ -82,10 +82,8 @@ package body p_vue_graph is
         FinFenetre(F);
     end F_Difficulte;
      
-    --procedure GenererGrille(G : in out TV_Grille;  NombreBombe : in Positive )  is 
-    --{} => { Initialise l'array pour la grille}
-    --begin
-        
-    --end GenererGrille;
+
+
+  
 
 end p_vue_graph;
