@@ -1,0 +1,50 @@
+V "GNAT Lib v8"
+A -gnatv
+A -gnato
+P ZX
+
+RN
+RV SPARK_05
+
+U x.args%s		x-args.ads		daddc507 NE OO PK
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c%s	i-c.adb			i-c.ali
+W x%s			x.ads			x.ali
+W x.strings%s		x-strings.adb		x-strings.ali
+
+D ada.ads		20170911084841 76789da1 ada%s
+D a-unccon.ads		20170908151217 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20180111085525 5ab55268 interfaces%s
+D i-c.ads		20170908151217 5421119b interfaces.c%s
+D i-cpoint.ads		20180111085525 ee8a93ec interfaces.c.pointers%s
+D i-cstrin.ads		20180111085525 341d0ddf interfaces.c.strings%s
+D system.ads		20180111085525 4635ec04 system%s
+D s-exctab.ads		20180111085525 54135002 system.exception_table%s
+D s-parame.ads		20180111085525 f896c45c system.parameters%s
+D s-stalib.ads		20180111085525 09bd3940 system.standard_library%s
+D x.ads			20131119093435 27ec3b31 x%s
+D x-args.ads		20131119093435 6bf768ef x.args%s
+D x-strings.ads		20131119093435 c2e78742 x.strings%s
+X 3 interfac.ads
+38K9*Interfaces 184e15 12|18r6
+X 4 i-c.ads
+18K20*C 230e17 12|18w17
+35I9*int<integer>
+72E9*char<character>
+X 5 i-cpoint.ads
+47P9*Pointer(13|30P10)
+X 11 x.ads
+21K9*X 430e6 12|19r6 21r9 35r19 37r11 39r11 49r5
+375E13*char{4|72E9}
+X 12 x-args.ads
+21K11*Args 11|21k9 12|45E28 49l7 49e11
+35i5*Argc{13|86I13} 45m22 45r22
+37p5*Argv{13|100P13} 46m22 46r22
+39p5*Env{13|100P13} 47m22 47r22
+X 13 x-strings.ads
+21K11*Strings 12|19w8 35r21 37r13 39r13 13|150e14
+23E13*char{11|375E13}
+30P10*charp(23E13)
+86I13*Natural_Int{4|35I9} 12|35r29
+100P13*charp_vector{5|47P9[94]} 12|37r21 39r21
+

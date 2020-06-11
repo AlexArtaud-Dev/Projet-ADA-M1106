@@ -4,9 +4,8 @@ with Forms; use Forms;
 package body p_vue_graph is 
 
 
-    procedure Main (F: in out TR_Fenetre) is 
+    procedure F_Main (F: in out TR_Fenetre) is 
     --{}=>{ouvre une fenetre principale avec les différents boutons}
-
     begin
         F:= DebutFenetre("Main", Fenetre_Size.X, Fenetre_Size.Y);
             AjouterBouton(F,"Jouer", "JOUER", 273, Button_Size.Y*1+170, Button_Size.X, Button_Size.Y);
@@ -16,31 +15,12 @@ package body p_vue_graph is
             AjouterImage(F, "tnt1xpm","tnt2.xpm", "  ", 40, 300 ,200,200 );
             AjouterImage(F, "tnt2xpm","tnt3.xpm", "  ", 580, 300 ,200,200 );
             AjouterImage(F, "demineur","demineur.xpm", "  ", 68, 20 ,700,150 );
-            --ChangerCouleurFond(F, "Score", FL_TOMATO);
+            ChangerCouleurFond(F, "fond", FL_RIGHT_BCOL);
         FinFenetre(F);
-        MontrerFenetre(F);
-        
-        declare 
-            ClickedButton : string := AttendreBouton(F);
-            NomJoueur:string(1..10) := (others =>(' '));
-        begin
-            if ClickedButton = "Score" then
-                CacherFenetre(F);
-                Score(F);
-                
-            elsif ClickedButton = "Jouer" then
-                CacherFenetre(F);
-                Nom(F, NomJoueur);
-            elsif ClickedButton = "Aide" then 
-                CacherFenetre(F);
-                Aide(F);
-            else
-                CacherFenetre(F);   
-            end if;
-        end;
-    end Main;                   
+       
+    end F_Main;                       
 
-    procedure Jouer (F : in out TR_Fenetre) is
+    procedure F_Jouer (F : in out TR_Fenetre) is
     --{F, Nom, X, Y: Longueur, Largeur de la fenetre} => { ouvre une fenetre de jeu }
     begin
         F := DebutFenetre("Jouer", Fenetre_Size.X, Fenetre_Size.Y);
@@ -51,116 +31,61 @@ package body p_vue_graph is
             ChangerStyleTexte(F,"Restart",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"ChangerNom",FL_BOLD_STYLE);
         FinFenetre(F);
-        MontrerFenetre(F);
-         declare 
-            ClickedButton : string := AttendreBouton(F);
-        begin
-            if ClickedButton = "Abandonner" then
-               CacherFenetre(F);
-            elsif ClickedButton = "Restart" then
-                CacherFenetre(F);
-            elsif ClickedButton = "ChangerNom" then 
-                CacherFenetre(F);
-            else
-                CacherFenetre(F);   
-            end if;     
-        end;
-    end Jouer;
+    end F_Jouer;
 
-    procedure Aide(F: in out TR_Fenetre) is 
+    procedure F_Aide(F: in out TR_Fenetre) is 
     --{} => {ouvre une fenetre avec les règles pour aider l'utilisateur}
     begin
         F := DebutFenetre("Aide", Fenetre_Size.X, Fenetre_Size.Y);
-            AjouterBoutonImage(F,"Retour","","retourbouton.xpm", 20, 500, 150, 50);--C'est Ilyes qui la trouvé
+            AjouterBoutonImage(F,"Retour","","retourbouton.xpm", 20, 500, 150, 50);
             AjouterImage(F, "aide","aide.xpm", "  ", 70, 20 ,700,150 );
             AjouterImage(F, "regles","regles.xpm", "  ",12, 170 ,900,200 );
             AjouterImage(F, "controle","controle.xpm", "  ",12, 335 ,900,200 );
         FinFenetre(F);
-        MontrerFenetre(F);
+      
+    end F_Aide;
 
-        declare
-            ClickedButton : string := AttendreBouton(F);
-        begin
-            if ClickedButton = "Retour" then
-                CacherFenetre(F);
-                Main(F);
-            else 
-                CacherFenetre(F);
-            end if;
-        end;
-    end Aide;
-
-    procedure Score (F : in out TR_Fenetre) is 
+    procedure F_Score (F : in out TR_Fenetre) is 
     --{} => {ouvre une fenetre avec les scores des utilisateurs }
     begin
         F := DebutFenetre("Score", Fenetre_Size.X, Fenetre_Size.Y);
+             AjouterBoutonImage(F,"Retour","","retourbouton.xpm", 20, 500, 150, 50);
             --ConsulterTimer(F, "Minuteur");
         FinFenetre(F);
-        MontrerFenetre(F);
-    end Score;
+    end F_Score;
     
 
-    procedure Nom(F: in out TR_Fenetre; NomJoueur: out string) is
+    procedure F_Nom(F: in out TR_Fenetre) is
     --{} => {Ouvre une fenetre pour initialiser le nom de l'utilisateur }
-        DifficulteJoueur : TR_Difficulte;
     begin
         F := DebutFenetre("NomJoueur", Fenetre_Size.X, Fenetre_Size.Y);
             AjouterImage(F, "Joueur","joueur.xpm", "  ", 70, 20 ,700,150 );
             AjouterImage(F, "pseudo","pseudo.xpm", "  ", 50, 160 ,700,150 );
             AjouterBouton(F,"Annuler","ANNULER",285,310,114,30);           
             AjouterBouton(F,"Valider","VALIDER",400,310,114,30);
-            AjouterChamp(F, "Nom","","Entrer Nom",285,270,230,30);
+            AjouterChamp(F,"Nom","","Entrer Nom",285,270,230,30);
             ChangerStyleTexte(F,"Annuler",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Valider",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Nom",FL_ITALIC_STYLE);
         FinFenetre(F);
-        MontrerFenetre(F);
+    end F_Nom;
 
-        declare 
-            ClickedButton : string := AttendreBouton(F);
-        begin
-            if ClickedButton = "Valider" then --A FIX, ne passe pas à difficulté quand un pseudo est renseigné
-                NomJoueur := ConsulterContenu(F, "Nom");
-                CacherFenetre(F);
-                Difficulte(F, DifficulteJoueur);
-            else
-                CacherFenetre(F);
-                Main(F); 
-            end if;     
-        end;
-    end Nom;
-
-    procedure Difficulte(F: in out TR_Fenetre; DifficulteJoueur: out TR_Difficulte)  is
+    procedure F_Difficulte(F: in out TR_Fenetre)  is
     --{} => {ouvre une fenetre pour choisir la difficultée du jeu}
     begin
         F := DebutFenetre("Difficulte", Fenetre_Size.X, Fenetre_Size.Y);
-            AjouterImage(F, "Difficulte","difficulte.xpm", "  ", 70, 20 ,700,150 );
+            AjouterImage(F, "1","difficulte.xpm", "  ", 70, 20 ,700,150 );
             AjouterBouton(F,"Facile", "FACILE", 270, Button_Size.Y*1+160, Button_Size.X, Button_Size.Y);
             AjouterBouton(F,"Moyen", "MOYEN", 270, Button_Size.Y*2+170, Button_Size.X, Button_Size.Y);
             AjouterBouton(F,"Difficile", "DIFFICILE", 270, Button_Size.Y*3+180, Button_Size.X, Button_Size.Y);
-            
+            AjouterBoutonImage(F,"Retour","","retourbouton.xpm", 20, 500, 150, 50);
         FinFenetre(F);
-        MontrerFenetre(F);
-
-        declare 
-            ClickedButton : string := AttendreBouton(F);
-        begin
-            if ClickedButton = "Moyen" then
-                DifficulteJoueur := D(Moyen);
-            elsif ClickedButton = "Difficile" then
-                DifficulteJoueur := D(Difficile);
-            else 
-                DifficulteJoueur := D(Facile);
-            end if;
-        end;
-        CacherFenetre(F);
-        Jouer(F);
-    end Difficulte;
+    end F_Difficulte;
      
     --procedure GenererGrille(G : in out TV_Grille;  NombreBombe : in Positive )  is 
     --{} => { Initialise l'array pour la grille}
     --begin
         
     --end GenererGrille;
-    
+
 end p_vue_graph;

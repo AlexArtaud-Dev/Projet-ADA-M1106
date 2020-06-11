@@ -44,17 +44,17 @@ package p_vue_graph is
 
     --------------------------------------------------------------------------------------
     
-    procedure Main (F : in out TR_Fenetre);
+    procedure F_Main (F : in out TR_Fenetre);
 
-    procedure Score (F : in out TR_Fenetre);
+    procedure F_Score (F : in out TR_Fenetre);
 
-    procedure Aide (F : in out TR_Fenetre);
+    procedure F_Aide (F : in out TR_Fenetre);
 
-    procedure Nom(F: in out TR_Fenetre; NomJoueur: out string);
+    procedure F_Nom(F: in out TR_Fenetre);
 
-    procedure Difficulte(F: in out TR_Fenetre; DifficulteJoueur: out TR_Difficulte);
+    procedure F_Difficulte(F: in out TR_Fenetre);
 
-    procedure Jouer(F : in out TR_Fenetre);
+    procedure F_Jouer(F : in out TR_Fenetre);
 
     --procedure GenererGrille(G : in out TV_Grille; NombreBombe : in out Positive);
 
