@@ -4,12 +4,13 @@ with p_esiut; use p_esiut;
 with p_vue_graph; use p_vue_graph;
 with p_demineur_modele; use p_demineur_modele;
 with ada.calendar;use ada.calendar;
+with Text_io; use Text_io;
 
 procedure demineur_graph is
 	F : TR_Fenetre;
+	score_file : p_scores_io.file_type;
 begin
 	InitialiserFenetres;
-
 	loop
 	    F_Main(F);
 		MontrerFenetre(F);
@@ -104,6 +105,7 @@ begin
 				CacherFenetre(F);
 				F_Score(F); 
 				MontrerFenetre(F);
+
 				declare
 					Click : string := AttendreBouton(F);
 				begin

@@ -2,21 +2,10 @@ with p_esiut;use p_esiut;
 with forms;use forms;
 with p_demineur_modele; use p_demineur_modele;
 with p_fenbase;use p_fenbase;
+with text_io;use text_io;
+with sequential_io;
 
 package p_vue_graph is 
-
-    --------------------------------------------------------------------------------------
-
-    type TR_Score is record
-        Nom : string(1..20) := (others => ' ');
-        Score : float;
-    end record;
-        
-	package p_scores_io is new sequential_io(TR_Score); use p_scores_io;
-
-    type TV_Score is array (integer range <>) of TR_Score;
-
-    --------------------------------------------------------------------------------------
 
     type T_Fenetre is (Main, Aide, Score, Jeu);
 
@@ -54,7 +43,20 @@ package p_vue_graph is
     D : TV_Difficulte := ( Facile => (9, 9, 10, (50, 50)), Moyen => (16, 16, 40, (32, 32)), Difficile => (16, 30, 99, (20, 20)));
 
     --------------------------------------------------------------------------------------
-    
+
+    type TR_Score is record
+        Nom : string(1..20) := (others => ' ');
+        Score : float;
+        Victoire : boolean;
+        Difficulte : T_Difficulte;
+    end record;
+        
+	package p_scores_io is new sequential_io(TR_Score); use p_scores_io;
+
+    type TV_Scores is array (integer range <>) of TR_Score;
+
+    --------------------------------------------------------------------------------------
+
     procedure F_Main (F : in out TR_Fenetre);
 
     procedure F_Score (F : in out TR_Fenetre);
@@ -67,11 +69,13 @@ package p_vue_graph is
 
     procedure F_Jouer(F : in out TR_Fenetre; G : in out TV_Grille; Case_Size : in TR_Case_Size);
 
-    --------------------------------------------------------------------------------------
+    procedure RafraichirGrille(F : in out TR_Fenetre; G : in out TV_Grille; Triche : in boolean);
 
     --------------------------------------------------------------------------------------
 
-    procedure SetEtatBoutton(F: in out TR_Fenetre; G: in out TV_Grille; Etat : in T_EtatBouton );
+    --------------------------------------------------------------------------------------
+
+    procedure SetEtatBoutton(F: in out TR_Fenetre; G: in out TV_Grille; Etat : in T_EtatBouton);
     
     procedure GetPosition(NumCase : in string; Colonne, Ligne : in integer; PosX, PosY: out integer);
     
@@ -79,14 +83,12 @@ package p_vue_graph is
        
     --------------------------------------------------------------------------------------
 
-    procedure GetScoresByName(Scores, UserScores : in out TV_Score; Nom : in string) ;
+    procedure GetScores(Scores, UserScores : in out TV_Scores; N : in string; Difficulte : in T_Difficulte; Victoire : in boolean; Score : in float);
 
-    procedure GetScores(f : in p_pays_io.file_type; Scores : out TV_Score);
+    procedure ScoresToArray(f : in p_scores_io.file_type; Scores : out TV_Scores);
 
-    procedure SetScore(f : in p_pays_io.file_type; Score : in out TR_Score);
-
-    procedure FScore(Victoire : in Boolean; Temps : in out Time; Nom : in out String);
+    procedure SetScore(f : in p_scores_io.file_type; Score : in TR_Score);
 
     --------------------------------------------------------------------------------------
-
+    
 end p_vue_graph;

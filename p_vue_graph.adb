@@ -30,17 +30,22 @@ package body p_vue_graph is
     --{F, Nom, X, Y: Longueur, Largeur de la fenetre} => { ouvre une fenetre de jeu }
     countX, countY, test : integer := 0;
     PositionString : String(1..4);
+    Heuredebut,Heurefin : Time;
     begin
+        Heuredebut := Clock;
         F := DebutFenetre("Jouer", Fenetre_Size.X, Fenetre_Size.Y);
             AjouterBouton(F,"Abandonner","ABANDONNER", Fenetre_Size.X-((Fenetre_Size.X/100)*17), (Fenetre_Size.Y/100)*37, (Fenetre_Size.X/100)*16, (Fenetre_Size.Y/100)*5); 
             AjouterBouton(F,"Restart","RESTART", Fenetre_Size.X-((Fenetre_Size.X/100)*17), (Fenetre_Size.Y/100)*44, (Fenetre_Size.X/100)*16, (Fenetre_Size.Y/100)*5);
             ChangerStyleTexte(F,"Abandonner",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Restart",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"ChangerNom",FL_BOLD_STYLE);
-            AjouterChrono(F, "Chronometre", "Votre temps", Fenetre_Size.X-((Fenetre_Size.X/100)*17), ((Fenetre_Size.Y/100)*15), ((Fenetre_Size.X/100)*16), ((Fenetre_Size.Y/100)*5));						
-        
-        ecrire_ligne(G'Length(1));
-        ecrire_ligne(G'Length(2));
+
+            AjouterMinuteur(F,"Clock","",150,350,100,70);   
+            ChangerStyleTexte(F,"Clock", FL_BOLD_Style);   
+            ChangerTailleTexte(F,"Clock", FL_medium_size);   
+            ChangerCouleurFond(F,"Clock",FL_WHITE);   
+
+
         for ligne in G'Range(1) loop
             for colonne in G'Range(2) loop
                 PositionString := GetPositionString(G, ligne, colonne); 
@@ -51,6 +56,8 @@ package body p_vue_graph is
             countY := countY+Case_Size.Y;
         end loop;
         FinFenetre(F);
+        Heurefin:= Clock;
+        ecrire_ligne(ConsulterTimer(F,"Clock"));
     end F_Jouer;
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
@@ -182,22 +189,36 @@ package body p_vue_graph is
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------------------ NOUVEAU PACKAGE
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
-    ------------------------------------------------------------------------------------------------------
-
-    procedure GetScoresByName(Scores, UserScores : in out TV_Score; Nom : in string) is
-        i : integer := 0;
+    procedure GetScores(Scores, UserScores : in out TV_Scores; N : in string; Difficulte : in T_Difficulte; Victoire : in boolean; Score : in float) is
+    --{} => {}
     begin
-        for Score in Scores'Range loop
-            if Score.Nom = Nom then
+        for i in Scores'Range loop
+            if Scores(i).Nom = N and Scores(i).Difficulte = Difficulte and Scores(i).Victoire = Victoire then
                 UserScores(i).Score := Score;
             end if;
-            i := i+1;
         end loop;
-    end GetScoreByName;
+    end GetScores;
+    ------------------------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------------------
+    procedure SetScore(f : in p_scores_io.file_type; Score : in TR_Score) is
+    --{} => {}
+    begin
+        
+        while 1 = 1 loop
+            ecrire_ligne(1);
+        end loop;
+    end SetScore;
 
-    procedure GetScores(f : in p_pays_io.file_type; Scores : out TV_Score) is
+    --Critère : Pour le même joueur : Niveau de dif, temps de la partie, nombre de coups, nombre de pioche.
+    ------------------------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------------------
+    procedure ScoresToArray(f : in p_scores_io.file_type; Scores : out TV_Scores) is
+    --{} => {}
         s : TR_Score;
         i : integer := 0;
     begin
@@ -207,46 +228,44 @@ package body p_vue_graph is
             Scores(i) := s;
             i := i+1;
         end loop;
-    end GetScore;
-    
+    end ScoresToArray;
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
-
-    --Un historique des scores des joueurs pourra également être géré.
-    procedure FScore(Victoire : in Boolean; Temps : in out Time; Nom : in out String) is
+    --procedure P_Score(Victoire : in Boolean; Temps : in out Time; Nom : in out String) is
     --{Victoire = true} =>{affiche le temps de l'utilisateur si il a gagné }
-        NewTemps : Time := Temps;
-     begin
+       -- NewTemps : Time := Temps;
+     --begin
             -- Initialiser les scores au tout début.
-            if Victoire then 
-                AjouterTexte(F, "txt", "VOS MEILLEURS TEMPS", X, Y, Largeur, Hauteur);--ou image 
-                AjouterTexte(F, "Facile", "", X, Y, Largeur, Hauteur);
-                AjouterTexte(F, "Moyen", "", X, Y, Largeur, Hauteur);
-                AjouterTexte(F, "Difficile", "", X, Y, Largeur, Hauteur);
-                Temps:=ConsulterTimer(F, "Minuteur");
-                ConsulterContenue(F, "Nom");    
-                    declare
-					    Click : string := AttendreBouton(F);
-                    begin
-                        if Click="Reset" then 
-                            EffacerContenu(F, "Minuteur");
-
-                    end;
-                    if Difficulte = "Facile" and Nom = Nom and NewTemps < Temps then -- Assigner une nouvelle valeur de temps < à la précedente à la difficulté facile et au pseudo correspondant
-                       NewTemps := Temps;
-                    end if;
+           -- if Victoire then 
+                --AjouterTexte(F, "txt", "VOS MEILLEURS TEMPS", X, Y, Largeur, Hauteur);--ou image 
+                --AjouterTexte(F, "Facile", "", X, Y, Largeur, Hauteur);
+                --AjouterTexte(F, "Moyen", "", X, Y, Largeur, Hauteur);
+                --AjouterTexte(F, "Difficile", "", X, Y, Largeur, Hauteur);
+                --Temps:=ConsulterTimer(F, "Minuteur");
+                --ConsulterContenue(F, "Nom");    
+               -- declare
+				--	Click : string := AttendreBouton(F);
+                --begin
+                  --  if Click="Reset" then 
+                   --     EffacerContenu(F, "Minuteur");
+                   -- end if;
+               -- end;
+               -- if Difficulte = "Facile" and Nom = Nom and NewTemps < Temps then -- Assigner une nouvelle valeur de temps < à la précedente à la difficulté facile et au pseudo correspondant
+               --     NewTemps := Temps;
+               -- end if;
             
-                AjouterTexte(F, "Moyen", "", X, Y, Largeur, Hauteur);
-                    if Difficulte = "Moyen" and Nom = Nom and NewTemps < Temps then -- Assigner une nouvelle valeur de temps < à la précedente à la difficulté facile et au pseudo correspondant
-                        NewTemps := Temps;
-                    end if;
-                AjouterTexte(F, "Difficile", "", X, Y, Largeur, Hauteur);
-                    if Difficulte = "Difficile" and Nom = Nom and NewTemps < Temps then -- Assigner une nouvelle valeur de temps < à la précedente à la difficulté facile et au pseudo correspondant
-                        NewTemps := Temps;
-                    end if;
-            end if;
-    end FScore;
+               -- AjouterTexte(F, "Moyen", "", X, Y, Largeur, Hauteur);
+               -- if Difficulte = "Moyen" and Nom = Nom and NewTemps < Temps then -- Assigner une nouvelle valeur de temps < à la précedente à la difficulté facile et au pseudo correspondant
+               --     NewTemps := Temps;
+              --  end if;
+
+               -- AjouterTexte(F, "Difficile", "", X, Y, Largeur, Hauteur);
+               -- if Difficulte = "Difficile" and Nom = Nom and NewTemps < Temps then -- Assigner une nouvelle valeur de temps < à la précedente à la difficulté facile et au pseudo correspondant
+                --    NewTemps := Temps;
+               -- end if;
+       -- end if;
+    --end P_Score;
 
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
