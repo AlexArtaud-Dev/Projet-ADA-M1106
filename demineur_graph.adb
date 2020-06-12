@@ -61,7 +61,7 @@ begin
 							ecrire_ligne(G'Length(2));
 							InitialiseGrille(G, Difficulte.NombreBombe);
 							CacherFenetre(F);
-							F_Jouer(F, G, Difficulte.CaseSize);
+							F_Jouer(F, G, Difficulte.CaseSize, Difficulte.NombreBombe);
 							MontrerFenetre(F);
 				
 							--Debut := Clock;
@@ -88,9 +88,11 @@ begin
 										F_Defaite(F);
 										MontrerFenetre(F);
 									elsif Click = "menu" then -- Marche pas
-										CacherFenetre(F);
-										F_Main(F);
-										MontrerFenetre(F);
+										Affichage_Temps_Pos := (640,30);
+										Nb_Flag_Pos := (640,160);
+										Boutton_Size_Jeu := (640,300);
+										Barre_Size := (600,1);
+										exit;
 									else
 										GetPosition(Click, Difficulte.Colonne, Difficulte.Ligne, PosX, PosY);
 										if ClickDroit then 

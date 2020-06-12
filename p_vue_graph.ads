@@ -44,7 +44,6 @@ package p_vue_graph is
         Y : Positive;
     end record;
 
-
     Affichage_Temps_Pos : TR_Affichage_Temps := (640,30);
     Nb_Flag_Pos : TR_Nb_Flag := (640,160);
     Boutton_Size_Jeu : TR_Boutton_Jeu := (640,300);
@@ -66,6 +65,7 @@ package p_vue_graph is
     type TV_Difficulte is array (T_Difficulte range <>) of TR_Difficulte;
 
     D : TV_Difficulte := ( Facile => (9, 9, 10, (50, 50)), Moyen => (16, 16, 40, (32, 32)), Difficile => (16, 30, 99, (20, 20)));
+
 
     --------------------------------------------------------------------------------------
 
@@ -96,7 +96,7 @@ package p_vue_graph is
 
     procedure F_Defaite(F : in out TR_Fenetre);
 
-    procedure F_Jouer(F : in out TR_Fenetre; G : in out TV_Grille; Case_Size : in TR_Case_Size);
+    procedure F_Jouer(F : in out TR_Fenetre; G : in out TV_Grille; Case_Size : in TR_Case_Size; NombreBombe : in Positive);
 
     procedure RafraichirGrille(F : in out TR_Fenetre; G : in out TV_Grille; Triche : in boolean);
 

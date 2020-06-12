@@ -52,24 +52,27 @@ package body p_vue_graph is
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
-    procedure F_Jouer (F : in out TR_Fenetre; G : in out TV_Grille; Case_Size : in TR_Case_Size) is
+    procedure F_Jouer (F : in out TR_Fenetre; G : in out TV_Grille; Case_Size : in TR_Case_Size; NombreBombe : in Positive) is
     --{F, Nom, X, Y: Longueur, Largeur de la fenetre} => { ouvre une fenetre de jeu }
     countX, countY, test : integer := 0;
     PositionString : String(1..4);
     Heuredebut,Heurefin : Time;
-  -- Dnombrebombe : String(1..2) := Integer'Image(Difficulte.NombreBombe);
-    begin
+  
+    begin 
+      
         Heuredebut := Clock;
         F := DebutFenetre("Jouer", Fenetre_Size.X, Fenetre_Size.Y);
             AjouterImage(F, "barreimg","img/barre.xpm", "  ",Barre_Size.X, Barre_Size.Y ,15,600); 
             AjouterImage(F, "tempsimg","img/temps.xpm", "  ",Affichage_Temps_Pos.X, Affichage_Temps_Pos.Y,155,40);
             AjouterImage(F, "drapeauimg","img/drapeau.xpm", "  ",Nb_Flag_Pos.X, Nb_Flag_Pos.Y ,155,40);
-            AjouterTexte(F,"nbmax","",Nb_Flag_Pos.X, Nb_Flag_Pos.Y+35,155,30);
+            AjouterTexte(F,"nbbomb","",Nb_Flag_Pos.X+90, Nb_Flag_Pos.Y+35,155,30);
+            ChangerCouleurFond(F, "nbnbbombe", FL_TOP_BCOL);
+            AjouterTexte(F,"nbmax","/"&integer'image(NombreBombe),Nb_Flag_Pos.X+105, Nb_Flag_Pos.Y+35,155,30);
             ChangerCouleurFond(F, "nbmax", FL_TOP_BCOL);
-            AjouterBouton(F,"Abandonner","ABANDONNER", Boutton_Size_Jeu.X, Boutton_Size_Jeu.Y+(Boutton_Size_Jeu.Y/100)*1, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*7); 
+            AjouterBouton(F,"Abandonner","RÉVÉLER", Boutton_Size_Jeu.X, Boutton_Size_Jeu.Y+(Boutton_Size_Jeu.Y/100)*1, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*7); 
             AjouterBouton(F,"Restart","RESTART", Boutton_Size_Jeu.X, Boutton_Size_Jeu.Y+(Boutton_Size_Jeu.Y/100)*19, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*7);
             AjouterBouton(F,"Victoire","VICTOIRE", Boutton_Size_Jeu.X, Boutton_Size_Jeu.Y+(Boutton_Size_Jeu.Y/100)*37, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*7);
-            AjouterBouton(F,"Defaite","DEFAITE", Boutton_Size_Jeu.X, Boutton_Size_Jeu.Y+(Boutton_Size_Jeu.Y/100)*55, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*7);
+            AjouterBouton(F,"Defaite","QUITTER", Boutton_Size_Jeu.X, Boutton_Size_Jeu.Y+(Boutton_Size_Jeu.Y/100)*55, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*7);
             ChangerStyleTexte(F,"Abandonner",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Restart",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Victoire",FL_BOLD_STYLE);
@@ -164,7 +167,7 @@ package body p_vue_graph is
     procedure RafraichirGrille(F : in out TR_Fenetre; G : in out TV_Grille; Triche : in boolean ) is
     --{} => {}
         C : TR_Case;
-        Arround : integer;
+        Arround, Marque : integer;
         Texte_Couleur : T_Couleur;
         PositionString : string(1..4);
     begin
