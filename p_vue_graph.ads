@@ -24,6 +24,16 @@ package p_vue_graph is
         Y : Positive;
     end record;
 
+    type TR_Nb_Flag is record
+        X : Positive;
+        Y : Positive;
+    end record;
+
+    type TR_Affichage_Temps is record
+        X : Positive;
+        Y : Positive;
+    end record;
+
     type TR_Case_Size is record 
         X : Positive;
         Y : Positive;
@@ -34,6 +44,9 @@ package p_vue_graph is
         Y : Positive;
     end record;
 
+
+    Affichage_Temps_Pos : TR_Affichage_Temps := (640,30);
+    Nb_Flag_Pos : TR_Nb_Flag := (640,160);
     Boutton_Size_Jeu : TR_Boutton_Jeu := (640,300);
     Barre_Size : TR_Barre_Pos := (600,1);
     Fenetre_Size : TR_Fenetre_Size := (820, 580);--résolution fenetre

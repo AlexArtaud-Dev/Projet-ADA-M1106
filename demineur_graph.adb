@@ -50,6 +50,8 @@ begin
 							Fenetre_Size := (820,365);
 							Barre_Size := (633,1);
 							Boutton_Size_Jeu := (660,210);
+							Nb_Flag_Pos := (657,110);
+							Affichage_Temps_Pos := (657,10);
 						end if;
 						declare
 							G : TV_Grille(1..Difficulte.Colonne, 1..Difficulte.Ligne);
