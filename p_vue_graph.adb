@@ -56,35 +56,34 @@ package body p_vue_graph is
     --{F, Nom, X, Y: Longueur, Largeur de la fenetre} => { ouvre une fenetre de jeu }
     countX, countY, test : integer := 0;
     PositionString : String(1..4);
-    Heuredebut,Heurefin : Time;
-  
+    --Heuredebut,Heurefin : Time;
+    
     begin 
       
-        Heuredebut := Clock;
+      --  Heuredebut := Clock;
         F := DebutFenetre("Jouer", Fenetre_Size.X, Fenetre_Size.Y);
             AjouterImage(F, "barreimg","img/barre.xpm", "  ",Barre_Size.X, Barre_Size.Y ,15,600); 
             AjouterImage(F, "tempsimg","img/temps.xpm", "  ",Affichage_Temps_Pos.X, Affichage_Temps_Pos.Y,155,40);
             AjouterImage(F, "drapeauimg","img/drapeau.xpm", "  ",Nb_Flag_Pos.X, Nb_Flag_Pos.Y ,155,40);
-            AjouterTexte(F,"nbbomb","",Nb_Flag_Pos.X+90, Nb_Flag_Pos.Y+35,155,30);
-            ChangerCouleurFond(F, "nbnbbombe", FL_TOP_BCOL);
-            AjouterTexte(F,"nbmax","/"&integer'image(NombreBombe),Nb_Flag_Pos.X+105, Nb_Flag_Pos.Y+35,155,30);
+            AjouterTexte(F,"nbbomb","",Nb_Flag_Pos.X+75, Nb_Flag_Pos.Y+35,50,30);
+            ChangerCouleurFond(F, "nbbomb", FL_TOP_BCOL);
+            AjouterTexte(F,"nbmax","/"&integer'image(NombreBombe),Nb_Flag_Pos.X+90, Nb_Flag_Pos.Y+35,50,30);
             ChangerCouleurFond(F, "nbmax", FL_TOP_BCOL);
             AjouterBouton(F,"Abandonner","RÉVÉLER", Boutton_Size_Jeu.X, Boutton_Size_Jeu.Y+(Boutton_Size_Jeu.Y/100)*1, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*7); 
             AjouterBouton(F,"Restart","RESTART", Boutton_Size_Jeu.X, Boutton_Size_Jeu.Y+(Boutton_Size_Jeu.Y/100)*19, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*7);
-            AjouterBouton(F,"Victoire","VICTOIRE", Boutton_Size_Jeu.X, Boutton_Size_Jeu.Y+(Boutton_Size_Jeu.Y/100)*37, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*7);
-            AjouterBouton(F,"Defaite","QUITTER", Boutton_Size_Jeu.X, Boutton_Size_Jeu.Y+(Boutton_Size_Jeu.Y/100)*55, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*7);
+            AjouterBouton(F,"Verification","VÉRIFICATION", Boutton_Size_Jeu.X, Boutton_Size_Jeu.Y+(Boutton_Size_Jeu.Y/100)*37, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*7);
+            AjouterBouton(F,"Quitter","QUITTER", Boutton_Size_Jeu.X, Boutton_Size_Jeu.Y+(Boutton_Size_Jeu.Y/100)*55, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*7);
             ChangerStyleTexte(F,"Abandonner",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Restart",FL_BOLD_STYLE);
-            ChangerStyleTexte(F,"Victoire",FL_BOLD_STYLE);
-            ChangerStyleTexte(F,"Defaite",FL_BOLD_STYLE);
+            ChangerStyleTexte(F,"Verification",FL_BOLD_STYLE);
+            ChangerStyleTexte(F,"Quitter",FL_BOLD_STYLE);
             ChangerCouleurFond(F, "fond", FL_TOP_BCOL);
 
-           -- AjouterMinuteur(F,"Clock","",150,350,100,70);   
+            --AjouterMinuteur(F,"Clock","",150,350,100,70);   
            -- ChangerStyleTexte(F,"Clock", FL_BOLD_Style);   
            -- ChangerTailleTexte(F,"Clock", FL_medium_size);   
            -- ChangerCouleurFond(F,"Clock",FL_WHITE);   
-
-
+              --heuredeb := ConsulterTimer(F,"Clock");
         for ligne in G'Range(1) loop
             for colonne in G'Range(2) loop
                 PositionString := GetPositionString(G, ligne, colonne); 
@@ -95,8 +94,8 @@ package body p_vue_graph is
             countY := countY+Case_Size.Y;
         end loop;
         FinFenetre(F);
-        Heurefin:= Clock;
-        ecrire_ligne(ConsulterTimer(F,"Clock"));
+       -- Heurefin:= Clock;
+        --ecrire_ligne(ConsulterTimer(F,"Clock"));
     end F_Jouer;
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
@@ -259,7 +258,7 @@ package body p_vue_graph is
         end loop;
     end SetScore;
 
-    --Critère : Pour le même joueur : Niveau de dif, temps de la partie, nombre de coups, nombre de pioche.
+    
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
@@ -278,6 +277,7 @@ package body p_vue_graph is
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
+    --Partie poubelle
     --procedure P_Score(Victoire : in Boolean; Temps : in out Time; Nom : in out String) is
     --{Victoire = true} =>{affiche le temps de l'utilisateur si il a gagné }
        -- NewTemps : Time := Temps;
@@ -312,7 +312,7 @@ package body p_vue_graph is
                -- end if;
        -- end if;
     --end P_Score;
-
+    -- Fin partie poubelle
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------

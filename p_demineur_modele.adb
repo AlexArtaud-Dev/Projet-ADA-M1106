@@ -84,26 +84,27 @@ package body p_demineur_modele is
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 
-	procedure MarqueCase (G : in out TV_Grille; L : in positive ; C : in positive ) is
+	procedure MarqueCase (G : in out TV_Grille; L : in positive; C : in positive; isMarquee : out boolean) is
 		--{} => {la case en position (L,C) dans la grille G est marquée si elle était couverte / couverte si elle était marquée}
 	begin
-		if G(L, C).Etat = couverte then -- Si couverte -> Marquée
-			G(L, C).Etat := marquee;
+		if G(L, C).Etat = Couverte then -- Si couverte -> Marquée
+			G(L, C).Etat := Marquee;
 		else
-			G(L, C).Etat := couverte; --> Sinon devient couverte
+			G(L, C).Etat := Couverte; --> Sinon devient couverte
 		end if;
+        isMarquee := (G(L, C).Etat = Marquee);
 	end MarqueCase;
  
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 
-	function VictoireJoueur (G : in TV_Grille ) return Boolean is
+	function VictoireJoueur (G : in TV_Grille) return Boolean is
 	--{} => {résultat = vrai si toutes les cases libres de la grille G sont dévoilées}
 	    victoire : boolean := true;
 	begin
-		for ligne in G'first(1)..G'last(1) loop
-			for colonne in G'first(2)..G'last(2) loop
+		for ligne in G'Range(1) loop
+			for colonne in G'Range(2) loop
 			    if  G(ligne, colonne).Etat = couverte and not G(ligne,colonne).Occupee then --si case est couverte et non occupée 
                     victoire := false; --perdu !!
 			    end if;
@@ -113,7 +114,7 @@ package body p_demineur_modele is
 	end VictoireJoueur;
 
     function DefaiteJoueur (G: in TV_Grille; L, C : in Positive) return Boolean is 
-    --{}=>{vrai si une case est découverte et occupée}
+    --{}=>{vrai si la case clickée est et occupée}
     begin
         return G(L, C).Occupee;
     end DefaiteJoueur;
@@ -176,6 +177,35 @@ package body p_demineur_modele is
             end loop;
         end loop;
     end Restart;
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
+
+    function VerificationMarquage(G : in TV_Grille;  NombreBombe : in Positive) return boolean is
+    --{} => {Résultat: }
+        NBombe, NCase : integer;
+    begin
+        GetMarque(G, NBombe, NCase);
+        return NBombe = NombreBombe and NCase = 0;
+    end VerificationMarquage;
+    
+    procedure GetMarque(G : in TV_Grille; NBombe, NCase : out integer) is
+    --{} => {Nb de bombe et nb de case marquée }
+        C : TR_Case;
+    begin
+        NBombe := 0;
+        NCase := 0;
+        for ligne in G'Range(1) loop
+            for colonne in G'Range(2) loop
+                C := G(ligne, colonne);
+                if C.Etat = Marquee and C.Occupee then
+                    NBombe := NBombe+1;
+                elsif C.Etat = Marquee and not C.Occupee then
+                    NCase := NCase+1;
+                end if;
+            end loop;
+        end loop;
+        ecrire("NBombe : "); ecrire_ligne(NBombe);
+        ecrire("NCase : "); ecrire_ligne(NCase);
+    end GetMarque;
 
 end p_demineur_modele;

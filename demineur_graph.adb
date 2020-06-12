@@ -56,6 +56,7 @@ begin
 						declare
 							G : TV_Grille(1..Difficulte.Colonne, 1..Difficulte.Ligne);
 							--Debut, Fin : Time;
+							NMarque, NMarqueBombe : integer := 0;
 						begin
 							ecrire_ligne(G'Length(1));
 							ecrire_ligne(G'Length(2));
@@ -68,8 +69,8 @@ begin
 							loop -- Attendre un click
 								declare 
 									Click : string := AttendreBouton(F);
-									PosX, PosY : integer;
-									Defaite : boolean := false;
+									PosX, PosY: integer;
+									Defaite, isMarquee : boolean := false;
 								begin 	
 									ecrire_ligne(Click);
 									if Click = "Abandonner" then
@@ -77,12 +78,17 @@ begin
 									elsif Click = "Restart" then
 										Restart(G);
 										SetEtatBoutton(F, G, marche);
-									elsif Click = "Victoire" then
+									elsif Click = "Verification" then
 										Fenetre_Size := (820,580);
+										Defaite := VerificationMarquage(G, Difficulte.NombreBombe);
 										CacherFenetre(F);
-										F_Victoire(F);
+										if Defaite then
+											F_Victoire(F);
+										else 
+											F_Defaite(F);
+										end if;					
 										MontrerFenetre(F);
-									elsif Click = "Defaite" then
+									elsif Click = "Quitter" then
 										Fenetre_Size := (820,580);
 										CacherFenetre(F);
 										F_Defaite(F);
@@ -96,9 +102,8 @@ begin
 									else
 										GetPosition(Click, Difficulte.Colonne, Difficulte.Ligne, PosX, PosY);
 										if ClickDroit then 
-											MarqueCase(G, PosX, PosY);
+											MarqueCase(G, PosX, PosY, isMarquee);
 										else
-										
 											DevoileCase(G, PosX, PosY);
 											ecrire("NumCase: "); ecrire_ligne(Click);
 											ecrire("PosX "); ecrire_ligne(PosX);
@@ -115,7 +120,6 @@ begin
 								end;
 								--exit when Defaite or Abandonner;
 							end loop;
-							
 							--Fin := Clock;
 							--ecrire_ligne(Fin);
 						end;

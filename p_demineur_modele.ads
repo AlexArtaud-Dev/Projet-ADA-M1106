@@ -28,7 +28,9 @@ package p_demineur_modele is
 	procedure MarqueCase (
 		G : in out 	TV_Grille;  
 		L : in     	positive;   
-		C : in     	positive ); 
+		C : in     	positive; 
+		isMarquee : out boolean
+		); 
 	--{} => {la case en position (L,C) dans la grille G est marquée si elle était couverte / couverte si elle était marquée}
   
 	function VictoireJoueur (
@@ -36,6 +38,12 @@ package p_demineur_modele is
     return Boolean;
 	--{} => {résultat = vrai si toutes les cases libres de la grille G sont dévoilées}
   
+	procedure GetMarque(G : in TV_Grille; NBombe, NCase : out integer);
 
 	procedure Restart (G : in out TV_Grille);
+	--{} => {Remet la grille à Zéro}
+
+	 function VerificationMarquage(G : in TV_Grille;  NombreBombe : in Positive) return boolean ;
+	 
+
 end p_demineur_modele;
