@@ -9,7 +9,6 @@ procedure demineur_texte is
     max_ligne_colonne : integer;
 begin
     loop
-
         -------------------------
         -------------------------   
         Perdu := false;
@@ -20,7 +19,6 @@ begin
         max_ligne_colonne := 50;
         -------------------------
         -------------------------
-
         while (nb_ligne < 1 or nb_colone < 1) or (nb_ligne > max_ligne_colonne or nb_colone > max_ligne_colonne) loop
             clr_ecran;
             ecrire("Nombre de lignes : "); lire(nb_ligne);

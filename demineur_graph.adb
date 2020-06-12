@@ -11,22 +11,22 @@ procedure demineur_graph is
 	score_file : p_scores_io.file_type;
 begin
 	InitialiserFenetres;
-	loop
+	loop -- Temp que on veut joueur on afiche le menu.
 	    F_Main(F);
 		MontrerFenetre(F);
 		declare
-			Click : string := AttendreBouton(F);
+			Click : string := AttendreBouton(F); -- On attend un click sur le menu.
 		begin
-			if Click = "Jouer" then
+			if Click = "Jouer" then -- Si on a click sur Jouer on rentre dans la condition
 				CacherFenetre(F);
 				F_Nom(F);
 				MontrerFenetre(F);
 				declare
-					Click : string := AttendreBouton(F);
-					NomJoueur : string(1..20) := (others => ' ');
+					Click : string := AttendreBouton(F); -- On attend un click sur le menu pour choisir le nom.
+					NomJoueur : string(1..1000) := (others => ' ');
 					Chars : integer := 0;
 				begin
-					Chars :=  ConsulterContenu(F, "Nom")'Length;
+					Chars :=  ConsulterContenu(F, "Nom")'Length
 					if Chars = 0 then 
 						NomJoueur(1..6) := "Invite";
 					else
@@ -34,7 +34,7 @@ begin
 					end if;
 					ecrire("Nom Joueur: "); ecrire_ligne(NomJoueur);
 					CacherFenetre(F);
-					F_Difficulte(F);
+					F_Difficulte(F); -- Quand on a defini le nom, on veut choisirl e niveau
 					MontrerFenetre(F);
 					declare
 						Click : string := AttendreBouton(F);
@@ -55,7 +55,6 @@ begin
 						end if;
 						declare
 							G : TV_Grille(1..Difficulte.Colonne, 1..Difficulte.Ligne);
-							--Debut, Fin : Time;
 							NMarque, NMarqueBombe : integer := 0;
 						begin
 							ecrire_ligne(G'Length(1));
@@ -64,21 +63,20 @@ begin
 							CacherFenetre(F);
 							F_Jouer(F, G, Difficulte.CaseSize, Difficulte.NombreBombe);
 							MontrerFenetre(F);
-				
-							--Debut := Clock;
-							loop -- Attendre un click
+							
+							loop
 								declare 
 									Click : string := AttendreBouton(F);
 									PosX, PosY: integer;
 									Defaite, isMarquee : boolean := false;
 								begin 	
 									ecrire_ligne(Click);
-									if Click = "Abandonner" then
+									if Click = "Abandonner" then -- Si on a click sur Abandonner on rentre dans la condition
 										Defaite := true;
-									elsif Click = "Restart" then
+									elsif Click = "Restart" then -- Si on a click sur Restart on rentre dans la condition
 										Restart(G);
 										SetEtatBoutton(F, G, marche);
-									elsif Click = "Verification" then
+									elsif Click = "Verification" then -- Si on a click sur Verification on rentre dans la condition
 										Fenetre_Size := (820,580);
 										Defaite := VerificationMarquage(G, Difficulte.NombreBombe);
 										CacherFenetre(F);
@@ -88,19 +86,19 @@ begin
 											F_Defaite(F);
 										end if;					
 										MontrerFenetre(F);
-									elsif Click = "Quitter" then
+									elsif Click = "Quitter" then -- Si on a click sur Quitter on rentre dans la condition
 										Fenetre_Size := (820,580);
 										CacherFenetre(F);
-										F_Defaite(F);
+										F_Defaite(F); -- Quitter revient a une Defaite
 										MontrerFenetre(F);
-									elsif Click = "menu" then -- Marche pas
+									elsif Click = "Menu" then
 										Affichage_Temps_Pos := (640,30);
 										Nb_Flag_Pos := (640,160);
 										Boutton_Size_Jeu := (640,300);
 										Barre_Size := (600,1);
 										exit;
 									else
-										GetPosition(Click, Difficulte.Colonne, Difficulte.Ligne, PosX, PosY);
+										GetPosition(Click, PosX, PosY);
 										if ClickDroit then 
 											MarqueCase(G, PosX, PosY, isMarquee);
 										else
@@ -118,14 +116,11 @@ begin
 										RafraichirGrille(F, G, false);	
 									end if;
 								end;
-								--exit when Defaite or Abandonner;
 							end loop;
-							--Fin := Clock;
-							--ecrire_ligne(Fin);
 						end;
 					end;
 				end;
-			elsif Click = "Score" then
+			elsif Click = "Score" then -- Si on a click sur Score on rentre dans la condition
 				CacherFenetre(F);
 				F_Score(F); 
 				MontrerFenetre(F);
@@ -158,14 +153,4 @@ begin
 		end;
 		CacherFenetre(F);
 	end loop;
-
-
-	-------------------------------------------	
-	-------------------------------------------
-
-	-------------------------------------------
-	-------------------------------------------
-
-
-
 end demineur_graph;

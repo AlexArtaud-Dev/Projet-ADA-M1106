@@ -83,40 +83,54 @@ package p_vue_graph is
     --------------------------------------------------------------------------------------
 
     procedure F_Main (F : in out TR_Fenetre);
+    --{F}=>{ Ouvre une fenetre affichant un message de victoire}
 
     procedure F_Score (F : in out TR_Fenetre);
+    --{F} => { Ouvre une fenetre avec les scores des utilisateurs}
 
     procedure F_Aide (F : in out TR_Fenetre);
+    --{F} => { Ouvre une fenetre avec les règles pour aider l'utilisateur}
 
     procedure F_Nom(F : in out TR_Fenetre);
+    --{F} => { Ouvre une fenetre pour initialiser le nom de l'utilisateur}
 
     procedure F_Difficulte(F : in out TR_Fenetre);
+    --{F} => {ouvre une fenetre pour choisir la difficultée du jeu}
 
     procedure F_Victoire(F : in out TR_Fenetre);
+    --{F}=>{ Ouvre une fenetre affichant un message de victoire}
 
     procedure F_Defaite(F : in out TR_Fenetre);
+    --{F}=>{ Ouvre la fenetre affichant un message de defaite}
 
     procedure F_Jouer(F : in out TR_Fenetre; G : in out TV_Grille; Case_Size : in TR_Case_Size; NombreBombe : in Positive);
+    --{F, G, Case_Size, NombreBombe } => { Ouvre la fenetre de jeu }
 
     procedure RafraichirGrille(F : in out TR_Fenetre; G : in out TV_Grille; Triche : in boolean);
+    --{F, G, Triche} => {Rafrachie la grille. Si triche est true on revele la grille}
 
     --------------------------------------------------------------------------------------
 
     --------------------------------------------------------------------------------------
 
     procedure SetEtatBoutton(F: in out TR_Fenetre; G: in out TV_Grille; Etat : in T_EtatBouton);
-    
-    procedure GetPosition(NumCase : in string; Colonne, Ligne : in integer; PosX, PosY: out integer);
-    
+    --{F, G, Etat} => {Definit l'etat d'un bouton ainsi que son style}
+
+    procedure GetPosition(NumCase : in string; PosX, PosY: out integer);
+    --{NumCase, PosX, PosY} => { Permet de recuperer la position X et Y d'un bouton grace a son nom}
+
     function GetPositionString(G : in TV_Grille; PosX, PosY : in integer) return string;
-       
+    --{G, PosX, PosY} => { Permet de definir le nom d'un bouton}
     --------------------------------------------------------------------------------------
 
     procedure GetScores(Scores, UserScores : in out TV_Scores; N : in string; Difficulte : in T_Difficulte; Victoire : in boolean; Score : in float);
+    --{Scores, UserScores, N, Difficulte, Victoire, Score} => { Permet de recuperer les score en fonction de differents filtres}
 
     procedure ScoresToArray(f : in p_scores_io.file_type; Scores : out TV_Scores);
+    --{} => {Transferer les scores du fichier dans un array}
 
     procedure SetScore(f : in p_scores_io.file_type; Score : in TR_Score);
+    --{f} => {Ecrire dans un fichier binaire les scores}
 
     --------------------------------------------------------------------------------------
     

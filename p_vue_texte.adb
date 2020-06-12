@@ -4,10 +4,10 @@ with p_demineur_modele; use p_demineur_modele;
 
 package body p_vue_texte is 
 
--------------------------------------------------------------------------------------------------------------------------------
+    -------------------------------------------------------------------------------------------------------------------------------
 
     procedure Affiche(G : in out TV_Grille; Triche : in boolean) is
-        --{} => {Affiche la grille de jeu}
+        --{G, Triche} => {Affiche la grille de jeu. Si Triche est true on devoile les cases}
         C : TR_Case;
         i : integer := 1;
         s : integer := 0;
@@ -55,23 +55,23 @@ package body p_vue_texte is
         a_la_ligne;
     end Affiche;
 
----------------------------------------------------------------------------------------------------------------------------------------------
+    ---------------------------------------------------------------------------------------------------------------------------------------------
 
     procedure Saisie(L, C : in out positive ; G : in TV_Grille) is
-        --{}=> {Permet la saisie par l'utilisateur d'une colonne et d'une ligne}
+        --{L, C, G}=> {Permet la saisie par l'utilisateur d'une colonne et d'une ligne}
     begin
         loop
         a_la_ligne;
               ecrire_ligne("Donnez le numero de la colonne souhaitee :"); lire(C);
               if G'Last(2) < C or 1 > C 
-              then ecrire_ligne("Le chiffre fourni est invalide"); --Vérification que le numéro de la colonne soit dans l'intervalle
+              then ecrire_ligne("Le chiffre fourni est invalide");
               end if;
               exit when G'last(2) >= C   and 0 < C;
         end loop;
         loop
               ecrire_ligne("Donnez le numero de la ligne souhaitee :"); lire(L);
               if G'Last(1) < L  or 1 > L 
-              then ecrire_ligne("Le chiffre fourni est invalid"); --Vérification que le numéro de la ligne soit dans l'intervalle
+              then ecrire_ligne("Le chiffre fourni est invalid");
               end if;
             exit when G'last(1) >= L and 0 < L;
         end loop;

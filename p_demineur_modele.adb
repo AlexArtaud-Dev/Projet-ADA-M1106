@@ -6,12 +6,10 @@ with Ada.Numerics.Discrete_Random;
 package body p_demineur_modele is
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
--- Cette procédure DévoileCase permet de changer l'attribrut Etat du vecteur G(L,C) en passant de l'Etat couverte à déccouverte 
--- (En prenant en compte le fait que si elle est découverte, cela ne change rien)
-
+    -- Cette procédure DévoileCase permet de changer l'attribrut Etat du vecteur G(L,C) en passant de l'Etat couverte à déccouverte 
+    -- (En prenant en compte le fait que si elle est découverte, cela ne change rien)
     procedure DevoileCase ( G : in out TV_Grille; L: in positive; C : in positive) is
-    --{} => {La case en position (L,C) dans la grille G est dévoilée et éventuellement ses voisines}
-    
+    --{G, L, C} => {La case en position (L,C) dans la grille G est dévoilée et éventuellement ses voisines}
     begin
         if G(L, C).Etat = couverte then
             if NombreMineAutour(G, L, C) = 0 
@@ -46,12 +44,10 @@ package body p_demineur_modele is
         end if;
     end DevoileCase;
 
-
----------------------------------------------------------------------------------------------------------------------------------------------
-
+    ---------------------------------------------------------------------------------------------------------------------------------------------
 
     function NombreMineAutour(G : in TV_Grille; L : in positive; C : in positive) return natural is
-        -- --{} =>{résultat = nombre de mines présentes dans les cases adjacents à la case (L,C) de G}
+        -- --{G, L, C} =>{résultat = nombre de mines présentes dans les cases adjacents à la case (L,C) de G}
         -- On reprend la meme base de fonctione que pour DevoileCase mais en modifiant la fin pour pouvoir return un natural qui nous permettra de vérifier une condition dans p_vue
         L1, L2, C1, C2 : natural :=0;
         k : natural := 0;
@@ -80,12 +76,10 @@ package body p_demineur_modele is
         return k;
     end NombreMineAutour;
 
-
----------------------------------------------------------------------------------------------------------------------------------------------
-
+    ---------------------------------------------------------------------------------------------------------------------------------------------
 
 	procedure MarqueCase (G : in out TV_Grille; L : in positive; C : in positive; isMarquee : out boolean) is
-		--{} => {la case en position (L,C) dans la grille G est marquée si elle était couverte / couverte si elle était marquée}
+	--{G, L, C, isMarque} => { La case en position (L,C) dans la grille G est marquée si elle était couverte / couverte si elle était marquée et isMarque prend true si la valuer a ete changer}
 	begin
 		if G(L, C).Etat = Couverte then -- Si couverte -> Marquée
 			G(L, C).Etat := Marquee;
@@ -95,12 +89,10 @@ package body p_demineur_modele is
         isMarquee := (G(L, C).Etat = Marquee);
 	end MarqueCase;
  
-
----------------------------------------------------------------------------------------------------------------------------------------------
-
+    ---------------------------------------------------------------------------------------------------------------------------------------------
 
 	function VictoireJoueur (G : in TV_Grille) return Boolean is
-	--{} => {résultat = vrai si toutes les cases libres de la grille G sont dévoilées}
+	--{G} => { Vrai si toutes les cases libres de la grille G sont dévoilées et non occupee}
 	    victoire : boolean := true;
 	begin
 		for ligne in G'Range(1) loop
@@ -114,14 +106,12 @@ package body p_demineur_modele is
 	end VictoireJoueur;
 
     function DefaiteJoueur (G: in TV_Grille; L, C : in Positive) return Boolean is 
-    --{}=>{vrai si la case clickée est et occupée}
+    --{G, L, C}=>{ Vrai si la case est occupée }
     begin
         return G(L, C).Occupee;
     end DefaiteJoueur;
 
-
----------------------------------------------------------------------------------------------------------------------------------------------
-    
+    ---------------------------------------------------------------------------------------------------------------------------------------------
 
 	procedure InitialiseGrille (G : out TV_Grille ; NbMines : in natural) is
         --{NbMines < G'length(1)*G'length(2)} => {NbMines ont été placées au hasard dans G ; toutes les cases sont couvertes}
@@ -159,14 +149,13 @@ package body p_demineur_modele is
                     counter := counter+1;
 			    end if;
             end if;
-
-            --ecrire("counter: "); ecrire_ligne(counter);
 		end loop;
 	end InitialiseGrille;
 
----------------------------------------------------------------------------------------------------------------------------------------------
+    ---------------------------------------------------------------------------------------------------------------------------------------------
+
     procedure Restart (G : in out TV_Grille) is
-    --{} => {Remet la grille à Zéro}
+    --{G} => { Remet l'etat des cases a leur etats original }
         C : TR_Case;
     begin
         for ligne in G'Range(1) loop
@@ -178,10 +167,10 @@ package body p_demineur_modele is
         end loop;
     end Restart;
 
----------------------------------------------------------------------------------------------------------------------------------------------
+    ---------------------------------------------------------------------------------------------------------------------------------------------
 
     function VerificationMarquage(G : in TV_Grille;  NombreBombe : in Positive) return boolean is
-    --{} => {Résultat: }
+    --{G, NombreBombe} => { Retourne true si on a le bon nombre de case marquée et que les autres case ne sont pas marqué }
         NBombe, NCase : integer;
     begin
         GetMarque(G, NBombe, NCase);
@@ -189,7 +178,7 @@ package body p_demineur_modele is
     end VerificationMarquage;
     
     procedure GetMarque(G : in TV_Grille; NBombe, NCase : out integer) is
-    --{} => {Nb de bombe et nb de case marquée }
+    --{G} => { Retourne NBombe le nombre de bombe marque et NCase le nombre de case marqué qui ne sont pas des bombes }
         C : TR_Case;
     begin
         NBombe := 0;

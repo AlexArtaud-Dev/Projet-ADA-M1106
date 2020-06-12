@@ -5,34 +5,35 @@ with ada.calendar;use ada.calendar;
 
 package body p_vue_graph is 
 
-
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     procedure F_Victoire(F: in out TR_Fenetre) is
-    --{Victoire}=>{ouvre une fenetre affichant un message de victoire}
+    --{F}=>{ Ouvre une fenetre affichant un message de victoire}
     begin
         F:= DebutFenetre("Vict", Fenetre_Size.X, Fenetre_Size.Y);
         AjouterImage(F, "victoireimg","img/victoire.xpm", "  ", 0, 0 ,820,480 );
-        AjouterBouton(F,"menu", "RETOUR", 310, 500, 200, 20);
+        AjouterBouton(F,"Menu", "RETOUR", 310, 500, 200, 20);
+        ChangerCouleurFond(F, "fond", FL_TOP_BCOL);
         FinFenetre(F); 
     end F_Victoire;
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     procedure F_Defaite(F: in out TR_Fenetre) is
-     --{Victoire}=>{ouvre une fenetre affichant un message de victoire}
+    --{F}=>{ Ouvre la fenetre affichant un message de defaite}
     begin
         F:= DebutFenetre("Defa", Fenetre_Size.X, Fenetre_Size.Y);
         AjouterImage(F, "defaiteimg","img/defaite.xpm", "  ", 0, 0 ,820,480 );
-        AjouterBouton(F,"menu", "RETOUR", 300, 500, 200, 20);
+        AjouterBouton(F,"Menu", "RETOUR", 300, 500, 200, 20);
+        ChangerCouleurFond(F, "fond", FL_TOP_BCOL);
         FinFenetre(F); 
     end F_Defaite;
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     procedure F_Main (F: in out TR_Fenetre) is 
-    --{}=>{ouvre une fenetre principale avec les différents boutons}
+    --{F}=>{Ouvre une fenetre principale}
     begin
         F:= DebutFenetre("Main", Fenetre_Size.X, Fenetre_Size.Y);
             AjouterBouton(F,"Jouer", "JOUER", 273, Button_Size.Y*1+170, Button_Size.X, Button_Size.Y);
@@ -53,14 +54,12 @@ package body p_vue_graph is
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     procedure F_Jouer (F : in out TR_Fenetre; G : in out TV_Grille; Case_Size : in TR_Case_Size; NombreBombe : in Positive) is
-    --{F, Nom, X, Y: Longueur, Largeur de la fenetre} => { ouvre une fenetre de jeu }
+    --{F, G, Case_Size, NombreBombe } => { Ouvre la fenetre de jeu }
     countX, countY, test : integer := 0;
     PositionString : String(1..4);
-    --Heuredebut,Heurefin : Time;
-    
-    begin 
-      
-      --  Heuredebut := Clock;
+    HeureDeb,HeureFin : Time; 
+    horloge : float;
+    begin
         F := DebutFenetre("Jouer", Fenetre_Size.X, Fenetre_Size.Y);
             AjouterImage(F, "barreimg","img/barre.xpm", "  ",Barre_Size.X, Barre_Size.Y ,15,600); 
             AjouterImage(F, "tempsimg","img/temps.xpm", "  ",Affichage_Temps_Pos.X, Affichage_Temps_Pos.Y,155,40);
@@ -78,12 +77,17 @@ package body p_vue_graph is
             ChangerStyleTexte(F,"Verification",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Quitter",FL_BOLD_STYLE);
             ChangerCouleurFond(F, "fond", FL_TOP_BCOL);
+            
+            
+            
+            AjouterHorlogeDigi(F,"clock","",Affichage_Temps_Pos.X+30,Affichage_Temps_Pos.Y+40,100,70);
 
-            --AjouterMinuteur(F,"Clock","",150,350,100,70);   
-           -- ChangerStyleTexte(F,"Clock", FL_BOLD_Style);   
-           -- ChangerTailleTexte(F,"Clock", FL_medium_size);   
-           -- ChangerCouleurFond(F,"Clock",FL_WHITE);   
-              --heuredeb := ConsulterTimer(F,"Clock");
+         -- AjouterMinuteur(F,"clock","",Affichage_Temps_Pos.X+30,Affichage_Temps_Pos.Y+40,100,70);  
+            ChangerStyleTexte(F,"clock", FL_BOLD_Style);   
+            ChangerTailleTexte(F,"clock", FL_medium_size);   
+            ChangerCouleurFond(F,"clock",FL_WHITE);
+            HeureDeb:=clock;
+            
         for ligne in G'Range(1) loop
             for colonne in G'Range(2) loop
                 PositionString := GetPositionString(G, ligne, colonne); 
@@ -93,15 +97,14 @@ package body p_vue_graph is
             countX := 0;
             countY := countY+Case_Size.Y;
         end loop;
-        FinFenetre(F);
-       -- Heurefin:= Clock;
-        --ecrire_ligne(ConsulterTimer(F,"Clock"));
-    end F_Jouer;
+
+        HeureFin:= clock;
+      end F_Jouer;
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     procedure F_Aide(F: in out TR_Fenetre) is 
-    --{} => {ouvre une fenetre avec les règles pour aider l'utilisateur}
+    --{F} => { Ouvre une fenetre avec les règles pour aider l'utilisateur}
     begin
         F := DebutFenetre("Aide", Fenetre_Size.X, Fenetre_Size.Y);
             AjouterBoutonImage(F,"Retour","","img/retourbouton.xpm", 20, 500, 150, 50);
@@ -115,7 +118,7 @@ package body p_vue_graph is
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     procedure F_Score (F : in out TR_Fenetre) is 
-    --{} => {ouvre une fenetre avec les scores des utilisateurs }
+    --{F} => { Ouvre une fenetre avec les scores des utilisateurs }
     begin
         F := DebutFenetre("Score", Fenetre_Size.X, Fenetre_Size.Y);
         AjouterImage(F, "Scoreimg","img/score.xpm", "  ", 70, 20 ,700,150 );
@@ -128,7 +131,7 @@ package body p_vue_graph is
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     procedure F_Nom(F: in out TR_Fenetre) is
-    --{} => {Ouvre une fenetre pour initialiser le nom de l'utilisateur }
+    --{F} => { Ouvre une fenetre pour initialiser le nom de l'utilisateur }
     begin
         F := DebutFenetre("Nom", Fenetre_Size.X, Fenetre_Size.Y);
             AjouterImage(F, "Joueurimg","img/joueur.xpm", "  ", 70, 20 ,700,150 );
@@ -146,7 +149,7 @@ package body p_vue_graph is
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     procedure F_Difficulte(F: in out TR_Fenetre)  is
-    --{} => {ouvre une fenetre pour choisir la difficultée du jeu}
+    --{F} => {ouvre une fenetre pour choisir la difficultée du jeu}
     begin
         F := DebutFenetre("Difficulte", Fenetre_Size.X, Fenetre_Size.Y);
             AjouterImage(F, "1","img/difficulte.xpm", "  ", 70, 20 ,700,150 );
@@ -164,7 +167,7 @@ package body p_vue_graph is
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     procedure RafraichirGrille(F : in out TR_Fenetre; G : in out TV_Grille; Triche : in boolean ) is
-    --{} => {}
+    --{F, G, Triche} => {Rafrachie la grille. Si triche est true on revele la grille}
         C : TR_Case;
         Arround, Marque : integer;
         Texte_Couleur : T_Couleur;
@@ -222,7 +225,7 @@ package body p_vue_graph is
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     procedure SetEtatBoutton(F: in out TR_Fenetre; G: in out TV_Grille; Etat : in T_EtatBouton ) is
-     --{} => {}
+    --{F, G, Etat} => {Definit l'etat d'un bouton ainsi que son style}
         PositionString : string(1..4);
     begin 
         for ligne in G'Range(1) loop
@@ -237,7 +240,6 @@ package body p_vue_graph is
             end loop;
         end loop;
     end SetEtatBoutton;
-    
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
@@ -245,7 +247,7 @@ package body p_vue_graph is
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     procedure GetScores(Scores, UserScores : in out TV_Scores; N : in string; Difficulte : in T_Difficulte; Victoire : in boolean; Score : in float) is
-    --{} => {}
+    --{Scores, UserScores, N, Difficulte, Victoire, Score} => { Permet de recuperer les score en fonction de differents filtres}
     begin
         for i in Scores'Range loop
             if Scores(i).Nom = N and Scores(i).Difficulte = Difficulte and Scores(i).Victoire = Victoire then
@@ -257,20 +259,17 @@ package body p_vue_graph is
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     procedure SetScore(f : in p_scores_io.file_type; Score : in TR_Score) is
-    --{} => {}
+    --{f} => {Ecrire dans un fichier binaire les scores}
     begin
-        
         while 1 = 1 loop
             ecrire_ligne(1);
         end loop;
     end SetScore;
-
-    
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     procedure ScoresToArray(f : in p_scores_io.file_type; Scores : out TV_Scores) is
-    --{} => {}
+    --{} => {Transferer les scores du fichier dans un array}
         s : TR_Score;
         i : integer := 0;
     begin
@@ -284,60 +283,19 @@ package body p_vue_graph is
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
-    --Partie poubelle
-    --procedure P_Score(Victoire : in Boolean; Temps : in out Time; Nom : in out String) is
-    --{Victoire = true} =>{affiche le temps de l'utilisateur si il a gagné }
-       -- NewTemps : Time := Temps;
-     --begin
-            -- Initialiser les scores au tout début.
-           -- if Victoire then 
-                --AjouterTexte(F, "txt", "VOS MEILLEURS TEMPS", X, Y, Largeur, Hauteur);--ou image 
-                --AjouterTexte(F, "Facile", "", X, Y, Largeur, Hauteur);
-                --AjouterTexte(F, "Moyen", "", X, Y, Largeur, Hauteur);
-                --AjouterTexte(F, "Difficile", "", X, Y, Largeur, Hauteur);
-                --Temps:=ConsulterTimer(F, "Minuteur");
-                --ConsulterContenue(F, "Nom");    
-               -- declare
-				--	Click : string := AttendreBouton(F);
-                --begin
-                  --  if Click="Reset" then 
-                   --     EffacerContenu(F, "Minuteur");
-                   -- end if;
-               -- end;
-               -- if Difficulte = "Facile" and Nom = Nom and NewTemps < Temps then -- Assigner une nouvelle valeur de temps < à la précedente à la difficulté facile et au pseudo correspondant
-               --     NewTemps := Temps;
-               -- end if;
-            
-               -- AjouterTexte(F, "Moyen", "", X, Y, Largeur, Hauteur);
-               -- if Difficulte = "Moyen" and Nom = Nom and NewTemps < Temps then -- Assigner une nouvelle valeur de temps < à la précedente à la difficulté facile et au pseudo correspondant
-               --     NewTemps := Temps;
-              --  end if;
-
-               -- AjouterTexte(F, "Difficile", "", X, Y, Largeur, Hauteur);
-               -- if Difficulte = "Difficile" and Nom = Nom and NewTemps < Temps then -- Assigner une nouvelle valeur de temps < à la précedente à la difficulté facile et au pseudo correspondant
-                --    NewTemps := Temps;
-               -- end if;
-       -- end if;
-    --end P_Score;
-    -- Fin partie poubelle
     ------------------------------------------------------------------------------------------------------
-    ------------------------------------------------------------------------------------------------------
-    ------------------------------------------------------------------------------------------------------
-    ------------------------------------------------------------------------------------------------------
-    ------------------------------------------------------------------------------------------------------
-    ------------------------------------------------------------------------------------------------------
-    procedure GetPosition(NumCase : in string; Colonne, Ligne : in integer ; PosX, PosY: out integer) is
-    --{} => {}
-    begin  
-        PosX := Integer'Value(NumCase(1..2));
-        PosY := Integer'Value(NumCase(3..4));
+    procedure GetPosition (NumCase : in string; PosX, PosY: out integer) is
+    --{NumCase, PosX, PosY} => { Permet de recuperer la position X et Y d'un bouton grace a son nom}
+    begin 
+        PosX := Integer'Value(NumCase(1..2));  
+        PosY := Integer'Value(NumCase(3..4));   
     end GetPosition;
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     
     function GetPositionString(G : in TV_Grille; PosX, PosY : in integer) return string is
-    --{} => {}
+    --{G, PosX, PosY} => { Permet de definir le nom d'un bouton }
         PositionString : string(1..4);
     begin
         if PosX < 10 and PosY < 10 then
