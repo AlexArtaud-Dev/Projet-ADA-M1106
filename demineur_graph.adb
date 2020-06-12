@@ -46,6 +46,8 @@ begin
 							Difficulte := D(Moyen);
 						elsif Click = "Difficile" then
 							Difficulte := D(Difficile);
+							Fenetre_Size := (820,365);
+							Barre_Size := (633,1);
 						end if;
 						declare
 							G : TV_Grille(1..Difficulte.Colonne, 1..Difficulte.Ligne);
@@ -54,7 +56,6 @@ begin
 							ecrire_ligne(G'Length(1));
 							ecrire_ligne(G'Length(2));
 							InitialiseGrille(G, Difficulte.NombreBombe);
-
 							CacherFenetre(F);
 							F_Jouer(F, G, Difficulte.CaseSize);
 							MontrerFenetre(F);
@@ -73,10 +74,12 @@ begin
 										Restart(G);
 										SetEtatBoutton(F, G, marche);
 									elsif Click = "Victoire" then
+										Fenetre_Size := (820,580);
 										CacherFenetre(F);
 										F_Victoire(F);
 										MontrerFenetre(F);
 									elsif Click = "Defaite" then
+										Fenetre_Size := (820,580);
 										CacherFenetre(F);
 										F_Defaite(F);
 										MontrerFenetre(F);
@@ -91,12 +94,10 @@ begin
 										else
 										
 											DevoileCase(G, PosX, PosY);
-
 											ecrire("NumCase: "); ecrire_ligne(Click);
 											ecrire("PosX "); ecrire_ligne(PosX);
 											ecrire("PosY: "); ecrire_ligne(PosY);
 											ecrire("NombreMineAutour: "); ecrire_ligne(NombreMineAutour( G, PosX, PosY));
-
 											Defaite := DefaiteJoueur(G, PosX, PosY);
 										end if;
 									end if;
@@ -108,6 +109,7 @@ begin
 								end;
 								--exit when Defaite or Abandonner;
 							end loop;
+							
 							--Fin := Clock;
 							--ecrire_ligne(Fin);
 						end;
