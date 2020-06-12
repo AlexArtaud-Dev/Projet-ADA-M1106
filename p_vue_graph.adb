@@ -65,7 +65,7 @@ package body p_vue_graph is
             AjouterImage(F, "barreimg","img/barre.xpm", "  ",Barre_Size.X, Barre_Size.Y ,15,600); 
             AjouterImage(F, "tempsimg","img/temps.xpm", "  ",Affichage_Temps_Pos.X, Affichage_Temps_Pos.Y,155,40);
             AjouterImage(F, "drapeauimg","img/drapeau.xpm", "  ",Nb_Flag_Pos.X, Nb_Flag_Pos.Y ,155,40);
-            AjouterTexte(F,"nbbomb","",Nb_Flag_Pos.X+75, Nb_Flag_Pos.Y+35,50,30);
+            AjouterTexte(F,"nbbomb","",Nb_Flag_Pos.X+50, Nb_Flag_Pos.Y+35,50,30);
             ChangerCouleurFond(F, "nbbomb", FL_TOP_BCOL);
             AjouterTexte(F,"nbmax","/"&integer'image(NombreBombe),Nb_Flag_Pos.X+90, Nb_Flag_Pos.Y+35,50,30);
             ChangerCouleurFond(F, "nbmax", FL_TOP_BCOL);
@@ -169,7 +169,14 @@ package body p_vue_graph is
         Arround, Marque : integer;
         Texte_Couleur : T_Couleur;
         PositionString : string(1..4);
+
+        NBombe, NCase : integer;
     begin
+        
+        GetMarque(G, NBombe, NCase);
+         
+        ChangerTexte(F, "nbbomb", Integer'Image(NBombe+NCase));
+
         for ligne in G'Range(1) loop
             for colonne in G'Range(2) loop
                 PositionString := GetPositionString(G, ligne, colonne);                
