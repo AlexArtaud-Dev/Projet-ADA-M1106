@@ -61,10 +61,10 @@ package body p_vue_graph is
         Heuredebut := Clock;
         F := DebutFenetre("Jouer", Fenetre_Size.X, Fenetre_Size.Y);
             AjouterImage(F, "barreimg","img/barre.xpm", "  ",Barre_Size.X, Barre_Size.Y ,15,600 );
-            AjouterBouton(F,"Abandonner","ABANDONNER", Fenetre_Size.X-((Fenetre_Size.X/100)*20), (Fenetre_Size.Y/100)*37, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*5); 
-            AjouterBouton(F,"Restart","RESTART", Fenetre_Size.X-((Fenetre_Size.X/100)*20), (Fenetre_Size.Y/100)*44, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*5);
-            AjouterBouton(F,"Victoire","VICTOIRE", Fenetre_Size.X-((Fenetre_Size.X/100)*20), (Fenetre_Size.Y/100)*51, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*5);
-            AjouterBouton(F,"Defaite","DEFAITE", Fenetre_Size.X-((Fenetre_Size.X/100)*20), (Fenetre_Size.Y/100)*58, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*5);
+            AjouterBouton(F,"Abandonner","ABANDONNER", Boutton_Size_Jeu.X, Boutton_Size_Jeu.Y+(Boutton_Size_Jeu.Y/100)*1, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*7); 
+            AjouterBouton(F,"Restart","RESTART", Boutton_Size_Jeu.X, Boutton_Size_Jeu.Y+(Boutton_Size_Jeu.Y/100)*19, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*7);
+            AjouterBouton(F,"Victoire","VICTOIRE", Boutton_Size_Jeu.X, Boutton_Size_Jeu.Y+(Boutton_Size_Jeu.Y/100)*37, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*7);
+            AjouterBouton(F,"Defaite","DEFAITE", Boutton_Size_Jeu.X, Boutton_Size_Jeu.Y+(Boutton_Size_Jeu.Y/100)*55, (Fenetre_Size.X/100)*19, (Fenetre_Size.Y/100)*7);
             ChangerStyleTexte(F,"Abandonner",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Restart",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Victoire",FL_BOLD_STYLE);

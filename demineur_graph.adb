@@ -44,10 +44,12 @@ begin
 							Difficulte := D(Facile);
 						elsif Click = "Moyen" then 
 							Difficulte := D(Moyen);
+							Boutton_Size_Jeu := (640,340);
 						elsif Click = "Difficile" then
 							Difficulte := D(Difficile);
 							Fenetre_Size := (820,365);
 							Barre_Size := (633,1);
+							Boutton_Size_Jeu := (660,210);
 						end if;
 						declare
 							G : TV_Grille(1..Difficulte.Colonne, 1..Difficulte.Ligne);

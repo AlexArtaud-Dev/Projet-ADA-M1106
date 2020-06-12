@@ -19,6 +19,11 @@ package p_vue_graph is
         Y : Positive;
     end record;
 
+    type TR_Boutton_Jeu is record
+        X : Positive;
+        Y : Positive;
+    end record;
+
     type TR_Case_Size is record 
         X : Positive;
         Y : Positive;
@@ -29,6 +34,7 @@ package p_vue_graph is
         Y : Positive;
     end record;
 
+    Boutton_Size_Jeu : TR_Boutton_Jeu := (640,300);
     Barre_Size : TR_Barre_Pos := (600,1);
     Fenetre_Size : TR_Fenetre_Size := (820, 580);--résolution fenetre
     Button_Size : TR_Button_Size := (280, 70);--Largeur,Hauteur des boutons
