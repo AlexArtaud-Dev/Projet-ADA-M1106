@@ -96,10 +96,10 @@ package body p_vue_graph is
     --{} => {ouvre une fenetre avec les règles pour aider l'utilisateur}
     begin
         F := DebutFenetre("Aide", Fenetre_Size.X, Fenetre_Size.Y);
-            AjouterBoutonImage(F,"Retour","","retourbouton.xpm", 20, 500, 150, 50);
+            AjouterBoutonImage(F,"Retour","","img/retourbouton.xpm", 20, 500, 150, 50);
             AjouterImage(F, "aideimg","img/aide.xpm", "  ", 70, 20 ,700,150 );
             AjouterImage(F, "reglesimg","img/regles.xpm", "  ",12, 170 ,900,200 );
-            AjouterImage(F, "controleimg","img/controle.xpm", "  ",12, 335 ,900,200 );
+            AjouterImage(F, "controleimg","img/controle.xpm", "  ",12, 335 ,675,125);
             ChangerCouleurFond(F, "fond", FL_TOP_BCOL);
         FinFenetre(F);
     end F_Aide;
@@ -111,7 +111,6 @@ package body p_vue_graph is
     begin
         F := DebutFenetre("Score", Fenetre_Size.X, Fenetre_Size.Y);
         AjouterImage(F, "Scoreimg","img/score.xpm", "  ", 70, 20 ,700,150 );
-        AjouterImage(F, "case1","img/Case1.xpm", "  ", 70, 20 ,50,50 );
         AjouterBoutonImage(F,"Retour","","img/retourbouton.xpm", 20, 500, 150, 50);
         ChangerCouleurFond(F, "fond", FL_TOP_BCOL);
             --ConsulterTimer(F, "Minuteur");
