@@ -34,10 +34,10 @@ begin
 					end if;
 					ecrire("Nom Joueur: "); ecrire_ligne(NomJoueur);
 					CacherFenetre(F);
-					F_Difficulte(F); -- Quand on a defini le nom, on veut choisirl e niveau
+					F_Difficulte(F); -- Quand on a defini le nom, on veut choisir le niveau.
 					MontrerFenetre(F);
 					declare
-						Click : string := AttendreBouton(F);
+						Click : string := AttendreBouton(F); -- On attend un click sur le menu pour choisir le niveau.
 						Difficulte : TR_Difficulte;
 					begin
 						if Click = "Facile" then
@@ -63,27 +63,26 @@ begin
 							CacherFenetre(F);
 							F_Jouer(F, G, Difficulte.CaseSize, Difficulte.NombreBombe);
 							MontrerFenetre(F);
-							
 							loop
 								declare 
-									Click : string := AttendreBouton(F);
+									Click : string := AttendreBouton(F); -- On attend un click sur le menu pour choisir l'action.
 									PosX, PosY: integer;
 									Defaite, isMarquee : boolean := false;
 								begin 	
 									ecrire_ligne(Click);
-									if Click = "Abandonner" then -- Si on a click sur Abandonner on rentre dans la condition
+									if Click = "Abandonner" then -- Si on a click sur Abandonner on rentre dans la condition qui donne defaite
 										Defaite := true;
-									elsif Click = "Restart" then -- Si on a click sur Restart on rentre dans la condition
+									elsif Click = "Restart" then -- Si on a click sur Restart on rentre dans la condition qui reset la grille et rend tous les boutons clickable
 										Restart(G);
 										SetEtatBoutton(F, G, marche);
-									elsif Click = "Verification" then -- Si on a click sur Verification on rentre dans la condition
+									elsif Click = "Verification" then -- Si on a click sur Verification on rentre dans la condition qui va verifier si toutes les mombes et uniquement les bombes sont marque
 										Fenetre_Size := (820,580);
 										Defaite := VerificationMarquage(G, Difficulte.NombreBombe);
 										CacherFenetre(F);
 										if Defaite then
-											F_Victoire(F);
+											F_Victoire(F); -- Si seulement les bnombes sont marque on gagne
 										else 
-											F_Defaite(F);
+											F_Defaite(F); -- Sinon on a perdue
 										end if;					
 										MontrerFenetre(F);
 									elsif Click = "Quitter" then -- Si on a click sur Quitter on rentre dans la condition
@@ -91,18 +90,18 @@ begin
 										CacherFenetre(F);
 										F_Defaite(F); -- Quitter revient a une Defaite
 										MontrerFenetre(F);
-									elsif Click = "Menu" then
+									elsif Click = "Menu" then -- Si on a click sur Quitter on rentre dans la condition
 										Affichage_Temps_Pos := (640,30);
 										Nb_Flag_Pos := (640,160);
 										Boutton_Size_Jeu := (640,300);
 										Barre_Size := (600,1);
 										exit;
 									else
-										GetPosition(Click, PosX, PosY);
-										if ClickDroit then 
+										GetPosition(Click, PosX, PosY); -- Si on a click sur autre chose on rentre dans la condition qui gere les click boutons
+										if ClickDroit then -- Si on a click droit, on marque la case
 											MarqueCase(G, PosX, PosY, isMarquee);
 										else
-											DevoileCase(G, PosX, PosY);
+											DevoileCase(G, PosX, PosY); -- Si on a click gauche sur une case, on devoile la case et on gere la logique
 											ecrire("NumCase: "); ecrire_ligne(Click);
 											ecrire("PosX "); ecrire_ligne(PosX);
 											ecrire("PosY: "); ecrire_ligne(PosY);
@@ -111,9 +110,9 @@ begin
 										end if;
 									end if;
 									if Defaite then
-										RafraichirGrille(F, G, true);
+										RafraichirGrille(F, G, true); -- Si on defaite, on affiche la grilel avec toutes les bombes
 									else
-										RafraichirGrille(F, G, false);	
+										RafraichirGrille(F, G, false); -- Sinon on rafraichi seulement la grille.
 									end if;
 								end;
 							end loop;
