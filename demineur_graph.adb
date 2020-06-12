@@ -72,6 +72,18 @@ begin
 									elsif Click = "Restart" then
 										Restart(G);
 										SetEtatBoutton(F, G, marche);
+									elsif Click = "Victoire" then
+										CacherFenetre(F);
+										F_Victoire(F);
+										MontrerFenetre(F);
+									elsif Click = "Defaite" then
+										CacherFenetre(F);
+										F_Defaite(F);
+										MontrerFenetre(F);
+									elsif Click = "menu" then -- Marche pas
+										CacherFenetre(F);
+										F_Main(F);
+										MontrerFenetre(F);
 									else
 										GetPosition(Click, Difficulte.Colonne, Difficulte.Ligne, PosX, PosY);
 										if ClickDroit then 

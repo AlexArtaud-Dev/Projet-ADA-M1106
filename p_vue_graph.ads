@@ -63,9 +63,13 @@ package p_vue_graph is
 
     procedure F_Aide (F : in out TR_Fenetre);
 
-    procedure F_Nom(F: in out TR_Fenetre);
+    procedure F_Nom(F : in out TR_Fenetre);
 
-    procedure F_Difficulte(F: in out TR_Fenetre);
+    procedure F_Difficulte(F : in out TR_Fenetre);
+
+    procedure F_Victoire(F : in out TR_Fenetre);
+
+    procedure F_Defaite(F : in out TR_Fenetre);
 
     procedure F_Jouer(F : in out TR_Fenetre; G : in out TV_Grille; Case_Size : in TR_Case_Size);
 

@@ -9,17 +9,43 @@ package body p_vue_graph is
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
     ------------------------------------------------------------------------------------------------------
+    procedure F_Victoire(F: in out TR_Fenetre) is
+    --{Victoire}=>{ouvre une fenetre affichant un message de victoire}
+    begin
+        F:= DebutFenetre("Vict", Fenetre_Size.X, Fenetre_Size.Y);
+        AjouterImage(F, "victoireimg","img/victoire.xpm", "  ", 0, 0 ,820,480 );
+        AjouterBouton(F,"menu", "RETOUR", 310, 500, 200, 20);
+        FinFenetre(F); 
+    end F_Victoire;
+    ------------------------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------------------
+    procedure F_Defaite(F: in out TR_Fenetre) is
+     --{Victoire}=>{ouvre une fenetre affichant un message de victoire}
+    begin
+        F:= DebutFenetre("Defa", Fenetre_Size.X, Fenetre_Size.Y);
+        AjouterImage(F, "defaiteimg","img/defaite.xpm", "  ", 0, 0 ,820,480 );
+        AjouterBouton(F,"menu", "RETOUR", 300, 500, 200, 20);
+        FinFenetre(F); 
+    end F_Defaite;
+    ------------------------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------------------------------------
     procedure F_Main (F: in out TR_Fenetre) is 
     --{}=>{ouvre une fenetre principale avec les différents boutons}
     begin
         F:= DebutFenetre("Main", Fenetre_Size.X, Fenetre_Size.Y);
             AjouterBouton(F,"Jouer", "JOUER", 273, Button_Size.Y*1+170, Button_Size.X, Button_Size.Y);
+            ChangerStyleTexte(F,"Jouer",FL_BOLD_STYLE);
             AjouterBouton(F,"Score", "SCORE", 273, Button_Size.Y*2+180, Button_Size.X, Button_Size.Y);
+            ChangerStyleTexte(F,"Score",FL_BOLD_STYLE);
             AjouterBouton(F,"Aide", "AIDE", 273, Button_Size.Y*3+190, Button_Size.X, Button_Size.Y);
+            ChangerStyleTexte(F,"Aide",FL_BOLD_STYLE);
             AjouterBouton(F,"Quitter", "QUITTER", 273, Button_Size.Y*4+200, Button_Size.X, Button_Size.Y);
-            AjouterImage(F, "tnt1img","tnt2.xpm", "  ", 40, 300 ,200,200 );
-            AjouterImage(F, "tnt2img","tnt3.xpm", "  ", 580, 300 ,200,200 );
-            AjouterImage(F, "demineurimg","demineur.xpm", "  ", 68, 20 ,700,150 );
+            ChangerStyleTexte(F,"Quitter",FL_BOLD_STYLE);
+            AjouterImage(F, "tnt1img","img/tnt1.xpm", "  ", 40, 300 ,200,200 );
+            AjouterImage(F, "tnt2img","img/tnt2.xpm", "  ", 580, 300 ,200,200 );
+            AjouterImage(F, "demineurimg","img/demineur.xpm", "  ", 68, 20 ,700,150 );
             ChangerCouleurFond(F, "fond", FL_TOP_BCOL);
         FinFenetre(F);  
     end F_Main;                       
@@ -36,9 +62,12 @@ package body p_vue_graph is
         F := DebutFenetre("Jouer", Fenetre_Size.X, Fenetre_Size.Y);
             AjouterBouton(F,"Abandonner","ABANDONNER", Fenetre_Size.X-((Fenetre_Size.X/100)*17), (Fenetre_Size.Y/100)*37, (Fenetre_Size.X/100)*16, (Fenetre_Size.Y/100)*5); 
             AjouterBouton(F,"Restart","RESTART", Fenetre_Size.X-((Fenetre_Size.X/100)*17), (Fenetre_Size.Y/100)*44, (Fenetre_Size.X/100)*16, (Fenetre_Size.Y/100)*5);
+            AjouterBouton(F,"Victoire","VICTOIRE", Fenetre_Size.X-((Fenetre_Size.X/100)*17), (Fenetre_Size.Y/100)*51, (Fenetre_Size.X/100)*16, (Fenetre_Size.Y/100)*5);
+            AjouterBouton(F,"Defaite","DEFAITE", Fenetre_Size.X-((Fenetre_Size.X/100)*17), (Fenetre_Size.Y/100)*58, (Fenetre_Size.X/100)*16, (Fenetre_Size.Y/100)*5);
             ChangerStyleTexte(F,"Abandonner",FL_BOLD_STYLE);
             ChangerStyleTexte(F,"Restart",FL_BOLD_STYLE);
-            ChangerStyleTexte(F,"ChangerNom",FL_BOLD_STYLE);
+            ChangerStyleTexte(F,"Victoire",FL_BOLD_STYLE);
+            ChangerStyleTexte(F,"Defaite",FL_BOLD_STYLE);
             ChangerCouleurFond(F, "fond", FL_TOP_BCOL);
 
            -- AjouterMinuteur(F,"Clock","",150,350,100,70);   
@@ -68,9 +97,9 @@ package body p_vue_graph is
     begin
         F := DebutFenetre("Aide", Fenetre_Size.X, Fenetre_Size.Y);
             AjouterBoutonImage(F,"Retour","","retourbouton.xpm", 20, 500, 150, 50);
-            AjouterImage(F, "aideimg","aide.xpm", "  ", 70, 20 ,700,150 );
-            AjouterImage(F, "reglesimg","regles.xpm", "  ",12, 170 ,900,200 );
-            AjouterImage(F, "controleimg","controle.xpm", "  ",12, 335 ,900,200 );
+            AjouterImage(F, "aideimg","img/aide.xpm", "  ", 70, 20 ,700,150 );
+            AjouterImage(F, "reglesimg","img/regles.xpm", "  ",12, 170 ,900,200 );
+            AjouterImage(F, "controleimg","img/controle.xpm", "  ",12, 335 ,900,200 );
             ChangerCouleurFond(F, "fond", FL_TOP_BCOL);
         FinFenetre(F);
     end F_Aide;
@@ -81,9 +110,9 @@ package body p_vue_graph is
     --{} => {ouvre une fenetre avec les scores des utilisateurs }
     begin
         F := DebutFenetre("Score", Fenetre_Size.X, Fenetre_Size.Y);
-        AjouterImage(F, "Scoreimg","score.xpm", "  ", 70, 20 ,700,150 );
-        AjouterImage(F, "case1","Case1.xpm", "  ", 70, 20 ,50,50 );
-        AjouterBoutonImage(F,"Retour","","retourbouton.xpm", 20, 500, 150, 50);
+        AjouterImage(F, "Scoreimg","img/score.xpm", "  ", 70, 20 ,700,150 );
+        AjouterImage(F, "case1","img/Case1.xpm", "  ", 70, 20 ,50,50 );
+        AjouterBoutonImage(F,"Retour","","img/retourbouton.xpm", 20, 500, 150, 50);
         ChangerCouleurFond(F, "fond", FL_TOP_BCOL);
             --ConsulterTimer(F, "Minuteur");
         FinFenetre(F);
@@ -95,8 +124,8 @@ package body p_vue_graph is
     --{} => {Ouvre une fenetre pour initialiser le nom de l'utilisateur }
     begin
         F := DebutFenetre("Nom", Fenetre_Size.X, Fenetre_Size.Y);
-            AjouterImage(F, "Joueurimg","joueur.xpm", "  ", 70, 20 ,700,150 );
-            AjouterImage(F, "pseudoimg","pseudo.xpm", "  ", 50, 160 ,700,150 );        
+            AjouterImage(F, "Joueurimg","img/joueur.xpm", "  ", 70, 20 ,700,150 );
+            AjouterImage(F, "pseudoimg","img/pseudo.xpm", "  ", 50, 160 ,700,150 );        
             AjouterBouton(F,"Valider","VALIDER",285,310,228,30);
             AjouterChamp(F,"Nom","","",285,270,230,30);
             ChangerStyleTexte(F,"Annuler",FL_BOLD_STYLE);
@@ -113,10 +142,13 @@ package body p_vue_graph is
     --{} => {ouvre une fenetre pour choisir la difficultée du jeu}
     begin
         F := DebutFenetre("Difficulte", Fenetre_Size.X, Fenetre_Size.Y);
-            AjouterImage(F, "1","difficulte.xpm", "  ", 70, 20 ,700,150 );
+            AjouterImage(F, "1","img/difficulte.xpm", "  ", 70, 20 ,700,150 );
             AjouterBouton(F,"Facile", "FACILE", 270, Button_Size.Y*1+160, Button_Size.X, Button_Size.Y);
+            ChangerStyleTexte(F,"Facile",FL_BOLD_STYLE);
             AjouterBouton(F,"Moyen", "MOYEN", 270, Button_Size.Y*2+170, Button_Size.X, Button_Size.Y);
+            ChangerStyleTexte(F,"Moyen",FL_BOLD_STYLE);
             AjouterBouton(F,"Difficile", "DIFFICILE", 270, Button_Size.Y*3+180, Button_Size.X, Button_Size.Y);
+            ChangerStyleTexte(F,"Difficile",FL_BOLD_STYLE);
             ChangerCouleurFond(F, "fond", FL_TOP_BCOL);
 
         FinFenetre(F);
