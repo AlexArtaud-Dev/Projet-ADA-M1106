@@ -45,7 +45,7 @@ begin
 						elsif Click = "Moyen" then 
 							Difficulte := D(Moyen);
 							Boutton_Size_Jeu := (640,340);
-						elsif Click = "Difficile" then
+						elsif Click = "Difficile" then -- Si on defaite, on affiche la grilel avec toutes les bombes
 							Difficulte := D(Difficile);
 							Fenetre_Size := (820,365);
 							Barre_Size := (633,1);
@@ -110,7 +110,7 @@ begin
 										end if;
 									end if;
 									if Defaite then
-										RafraichirGrille(F, G, true); -- Si on defaite, on affiche la grilel avec toutes les bombes
+										RafraichirGrille(F, G, true); -- Si on defaite, on affiche la grilel avec toutes les bombes.
 									else
 										RafraichirGrille(F, G, false); -- Sinon on rafraichi seulement la grille.
 									end if;
@@ -123,7 +123,6 @@ begin
 				CacherFenetre(F);
 				F_Score(F); 
 				MontrerFenetre(F);
-
 				declare
 					Click : string := AttendreBouton(F);
 				begin
